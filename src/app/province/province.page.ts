@@ -14,7 +14,7 @@ import {Regioni} from '../models/regioni';
 })
 export class ProvincePage implements OnInit{
   listRegioni: ListRegioni[];
-  selectedRegion: number;
+  selectedRegion = 15;
   riepilogoRegioni = new BehaviorSubject<Riepilogoregioni[]>(null);
   chartData: ChartData[] = [];
   regioni: Regioni[];
@@ -46,12 +46,17 @@ export class ProvincePage implements OnInit{
     this.getRiepilogoRegioni(this.selectedRegion);
   }
 
+  compareFn(e1: number, e2: number): boolean {
+    return e1 && e2 ? e1 === e2 : e1 === e2;
+  }
+
   ngOnInit(): void {
     this.getListRegioni();
+    this.getLatestRegioni(this.selectedRegion);
+    this.getRiepilogoRegioni(this.selectedRegion);
     this.riepilogoRegioni.subscribe((data) => {
       if (data) {
         this.chartData = [];
-        console.log(data);
         this.chartData.push({
           title: 'Grafico di riepilogo',
           data,

@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Regioni} from '../models/regioni';
+import {ApiService} from '../service/api.service';
+import {DecimalPipe, PercentPipe} from '@angular/common';
 
 @Component({
   selector: 'app-dati-essenziali',
@@ -9,7 +11,10 @@ import {Regioni} from '../models/regioni';
 export class DatiEssenzialiComponent implements OnInit {
   @Input() data: Regioni;
 
-  constructor( ) { }
+  constructor(
+      private decimalPipe: DecimalPipe,
+      private percentPipe: PercentPipe
+  ) { }
 
   percentage(value: number): string{
     try {

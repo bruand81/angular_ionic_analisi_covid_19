@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {HttpClientModule} from '@angular/common/http';
-import {DatePipe, registerLocaleData} from '@angular/common';
+import {DatePipe, DecimalPipe, PercentPipe, registerLocaleData} from '@angular/common';
 import localeIt from '@angular/common/locales/it';
 import {DrawChartsComponent} from './draw-charts/draw-charts.component';
 
@@ -31,7 +31,9 @@ registerLocaleData(localeIt, 'it');
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     {provide: LOCALE_ID, useValue: 'it'},
     InAppBrowser,
-    DatePipe
+    DatePipe,
+    DecimalPipe,
+    PercentPipe
   ],
   bootstrap: [AppComponent]
 })

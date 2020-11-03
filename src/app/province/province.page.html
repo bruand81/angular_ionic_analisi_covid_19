@@ -14,13 +14,19 @@
   </ion-header>
 
   <ion-item>
-    <ion-select *ngIf="listRegioni" [(ngModel)]="selectedRegion" (ionChange)="selectedRegionFn()" placeholder="Seleziona una regione">
+    <ion-select *ngIf="listRegioni" [(ngModel)]="selectedRegion" (ionChange)="selectedRegionFn()" [compareWith]="compareFn" placeholder="Seleziona una regione">
       <ion-select-option *ngFor="let regione of listRegioni" [value]="regione.codice_regione"> {{ regione.denominazione_regione }} </ion-select-option>
     </ion-select>
   </ion-item>
 
   <app-dati-essenziali *ngIf="regioni" [data]="regioni[0]"></app-dati-essenziali>
 
-  <app-draw-charts *ngFor="let data of chartData" [data]="data"></app-draw-charts>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let data of chartData">
+        <app-draw-charts [data]="data"></app-draw-charts>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

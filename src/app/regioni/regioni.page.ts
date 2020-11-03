@@ -6,7 +6,7 @@ import {Riepilogoregioni} from '../models/riepilogoregioni';
 import { Chart } from 'chart.js';
 import {BehaviorSubject} from 'rxjs';
 import * as d3 from 'd3';
-import {DatePipe} from '@angular/common';
+import {DatePipe, DecimalPipe, PercentPipe} from '@angular/common';
 import {ChartData} from '../models/chart-data';
 
 @Component({
@@ -25,14 +25,15 @@ export class RegioniPage implements OnInit{
   public showContent = false;
   public openIcon = 'chevron-down-outline';
   public cardContentStyle = 'display: none';
-  positiviChartData: ChartData;
-  ospedaliChartData: ChartData;
+  chartData: ChartData[] = [];
   dataAggiornamento = '-';
 
   constructor(
       public api: ApiService,
       private router: Router,
-      public datepipe: DatePipe
+      public datepipe: DatePipe,
+      private decimalPipe: DecimalPipe,
+      private percentPipe: PercentPipe
   ) {}
 
   getLatestRegioni() {
@@ -77,54 +78,55 @@ export class RegioniPage implements OnInit{
     this.riepilogoRegioni.subscribe((data) => {
       if (data) {
         this.dataAggiornamento = this.datepipe.transform(data[data.length - 1].data, 'fullDate');
-      }
-      this.positiviChartData = {
-        title: 'Grafico di riepilogo',
-        data,
-        chartLines: [
-          {
-            field: 'nuovi_positivi',
-            title: 'Nuovi positivi'
-          },
-          {
-            field: 'nuovi_positivi_7dma',
-            title: 'Nuovi positivi (7DMA)'
-          },
-          {
-            field: 'nuovi_positivi_3dma',
-            title: 'Nuovi positivi (3DMA)'
-          },
-          {
-            field: 'incidenza_7d',
-            title: 'Incidenza a 7gg /10000 abitanti'
-          }
-        ],
-        colorScheme: d3.schemePaired,
-      };
+        this.chartData = [];
+        this.chartData.push({
+          title: 'Grafico di riepilogo',
+          data,
+          chartLines: [
+            {
+              field: 'nuovi_positivi',
+              title: 'Nuovi positivi'
+            },
+            {
+              field: 'nuovi_positivi_7dma',
+              title: 'Nuovi positivi (7DMA)'
+            },
+            {
+              field: 'nuovi_positivi_3dma',
+              title: 'Nuovi positivi (3DMA)'
+            },
+            {
+              field: 'incidenza_7d',
+              title: 'Incidenza a 7gg /10000 abitanti'
+            }
+          ],
+          colorScheme: d3.schemePaired,
+        });
 
-      this.ospedaliChartData = {
-        title: 'Grafico carichi ospedalieri',
-        data,
-        chartLines: [
-          {
-            field: 'variazione_terapia_intensiva',
-            title: 'Terapie intensive'
-          },
-          {
-            field: 'variazione_ricoverati_con_sintomi',
-            title: 'Ricoverati con sintomi'
-          },
-          {
-            field: 'variazione_dimessi_guariti',
-            title: 'Guariti'
-          },
-          {
-            field: 'variazione_deceduti',
-            title: 'Decessi'
-          }
-        ],
-        colorScheme: d3.schemeOrRd[4],
-      };
+        this.chartData.push({
+          title: 'Grafico carichi ospedalieri',
+          data,
+          chartLines: [
+            {
+              field: 'variazione_terapia_intensiva',
+              title: 'Terapie intensive'
+            },
+            {
+              field: 'variazione_ricoverati_con_sintomi',
+              title: 'Ricoverati con sintomi'
+            },
+            {
+              field: 'variazione_dimessi_guariti',
+              title: 'Guariti'
+            },
+            {
+              field: 'variazione_deceduti',
+              title: 'Decessi'
+            }
+          ],
+          colorScheme: d3.schemeOrRd[4],
+        });
+      }
     });
     this.getLatestRegioni();
     this.getRiepilogoRegioni(0);

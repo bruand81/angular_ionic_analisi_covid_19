@@ -9,15 +9,23 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Riepilogo nazionale al {{ dataAggiornamento }}</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <app-dati-essenziali *ngIf="regioni" [data]="regioni[0]"></app-dati-essenziali>
 
-  <app-draw-charts *ngIf="positiviChartData" [data]="positiviChartData"></app-draw-charts>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let data of chartData">
+        <app-draw-charts [data]="data"></app-draw-charts>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  <app-draw-charts *ngIf="ospedaliChartData" [data]="ospedaliChartData"></app-draw-charts>
+<!--  <app-draw-charts *ngIf="positiviChartData" [data]="positiviChartData"></app-draw-charts>-->
+
+<!--  <app-draw-charts *ngIf="ospedaliChartData" [data]="ospedaliChartData"></app-draw-charts>-->
 
   <ion-card>
     <ion-card-header>
@@ -51,8 +59,7 @@
             <span>Percentuale Positivi/Tamponi</span>
           </ng-template>
           <ng-template let-row="row" ngx-datatable-cell-template>
-            <!--        {{ row.tamponi_su_positivi }}-->
-            {{ formatatRate(row.percentuale_positivi_tamponi_giornaliera, row.nuovi_positivi, row.variazione_tamponi)}}
+            {{ row.percentuale_positivi_tamponi_giornaliera | percent:'1.0-2'}} ({{ row.nuovi_positivi | number}} su {{ row.variazione_tamponi | number}})
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="casi_su_positivi" [minWidth]="210" maxWidth="auto" [sortable]="false">
@@ -60,8 +67,7 @@
             <span>Percentuale Positivi/Casi testati</span>
           </ng-template>
           <ng-template let-row="row" ngx-datatable-cell-template>
-            <!--        {{ row.casi_su_positivi }}-->
-            {{ formatatRate(row.percentuale_positivi_casi_giornaliera, row.nuovi_positivi, row.variazione_casi_testati)}}
+            {{ row.percentuale_positivi_casi_giornaliera | percent:'1.0-2'}} ({{ row.nuovi_positivi | number}} su {{ row.variazione_casi_testati | number}})
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="decessi" [maxWidth]="85">
@@ -69,7 +75,7 @@
             <span>Decessi</span>
           </ng-template>
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.variazione_deceduti }}
+            {{ row.variazione_deceduti | number }}
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="ti" [maxWidth]="95">
@@ -77,7 +83,7 @@
             <span>Terapia Intensiva</span>
           </ng-template>
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.variazione_terapia_intensiva }}
+            {{ row.variazione_terapia_intensiva | number}}
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="ricoverati" [maxWidth]="110">
@@ -85,7 +91,7 @@
             <span>Ricoverati con Sintomi</span>
           </ng-template>
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.variazione_ricoverati_con_sintomi }}
+            {{ row.variazione_ricoverati_con_sintomi | number}}
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="guariti" [maxWidth]="85">
@@ -93,7 +99,7 @@
             <span>Guariti</span>
           </ng-template>
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.variazione_dimessi_guariti }}
+            {{ row.variazione_dimessi_guariti | number}}
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="incidenza7g" [maxWidth]="200">
@@ -101,7 +107,7 @@
             <span>Incidenza a 7 giorni / 100.000 ab</span>
           </ng-template>
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.incidenza_7d }}
+            {{ row.incidenza_7d | number}}
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="cfr" [maxWidth]="70">
@@ -109,7 +115,7 @@
             <span>CFR</span>
           </ng-template>
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ percentage(row.cfr) }}
+            {{ row.cfr | percent:'1.0-2'}}
           </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-footer></ngx-datatable-footer>

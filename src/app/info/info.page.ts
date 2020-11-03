@@ -6,7 +6,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   templateUrl: 'info.page.html',
   styleUrls: ['info.page.scss']
 })
-export class Tab3Page {
+export class InfoPage {
   pageTitle = 'Informazioni';
   pcmUrl = 'https://github.com/pcm-dpc/COVID-19';
 

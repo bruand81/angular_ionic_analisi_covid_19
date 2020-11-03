@@ -2,7 +2,6 @@ import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleCh
 import {ChartData} from '../models/chart-data';
 import { v4 as uuidv4 } from 'uuid';
 import {Riepilogoregioni} from '../models/riepilogoregioni';
-import * as d3 from 'd3';
 import {DatePipe} from '@angular/common';
 import { Chart } from 'chart.js';
 
@@ -59,7 +58,6 @@ export class DrawChartsComponent implements OnInit, OnChanges, AfterViewInit {
         i++;
       });
 
-      console.log(this.lineCanvas);
       this.lineChart = new Chart(this.lineCanvas.nativeElement, {
         type: 'line',
         data: {

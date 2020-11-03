@@ -1,35 +1,59 @@
 <ion-list>
   <ion-list-header>Dati riepilogativi {{ data.denominazione_regione }}</ion-list-header>
-  <ion-item>
-    <ion-label>Percentuale positivi/tamponi</ion-label>
-    <ion-item slot="end" color="danger"> {{ formatatRate(data.percentuale_positivi_tamponi_giornaliera, data.nuovi_positivi, data.variazione_tamponi) }} </ion-item>
-  </ion-item>
-  <ion-item>
-    <ion-label>Percentuale positivi/persone testate</ion-label>
-    <ion-item slot="end" color="danger"> {{ formatatRate(data.percentuale_positivi_casi_giornaliera, data.nuovi_positivi, data.variazione_casi_testati) }} </ion-item>
-  </ion-item>
-  <ion-item>
-    <ion-label>Decessi</ion-label>
-    <ion-item slot="end" color="danger"> {{ data.variazione_deceduti }} </ion-item>
-  </ion-item>
-  <ion-item>
-    <ion-label>Terapie intensive</ion-label>
-    <ion-item slot="end" color="warning"> {{ data.variazione_terapia_intensiva }} </ion-item>
-  </ion-item>
-  <ion-item>
-    <ion-label>Ricoverati</ion-label>
-    <ion-item slot="end" color="warning"> {{ data.variazione_ricoverati_con_sintomi }} </ion-item>
-  </ion-item>
-  <ion-item>
-    <ion-label>Case Fatality Rate</ion-label>
-    <ion-item slot="end" color="warning"> {{ percentage(data.cfr) }} </ion-item>
-  </ion-item>
-  <ion-item>
-    <ion-label>Incidenza a 7 giorni (positivi/100.000 abitanti)</ion-label>
-    <ion-item slot="end" color="tertiary"> {{ data.incidenza_7d }} </ion-item>
-  </ion-item>
-  <ion-item>
-    <ion-label>Guariti</ion-label>
-    <ion-item slot="end" color="success"> {{ data.variazione_dimessi_guariti }} </ion-item>
-  </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Positivi/Tamponi</ion-label>
+          <ion-badge slot="end" color="danger"> {{ data.percentuale_positivi_tamponi_giornaliera | percent:'1.0-2' }} ({{ data.nuovi_positivi | number }} su {{ data.variazione_tamponi | number}}) </ion-badge>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Positivi/Persone</ion-label>
+          <ion-badge slot="end" color="danger"> {{ data.percentuale_positivi_casi_giornaliera | percent:'1.0-2' }} ({{ data.nuovi_positivi | number }} su {{ data.variazione_casi_testati | number}}) </ion-badge>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Decessi</ion-label>
+          <ion-badge slot="end" color="danger"> {{ data.variazione_deceduti | number }} </ion-badge>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Terapie intensive</ion-label>
+          <ion-badge slot="end" color="warning"> {{ data.variazione_terapia_intensiva | number }} </ion-badge>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Ricoverati</ion-label>
+          <ion-badge slot="end" color="warning"> {{ data.variazione_ricoverati_con_sintomi | number }} </ion-badge>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Case Fatality Rate</ion-label>
+          <ion-badge slot="end" color="warning"> {{ data.cfr | percent:'1.0-2' }} </ion-badge>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Incidenza a 7 giorni (positivi/100.000 abitanti)</ion-label>
+          <ion-badge slot="end" color="tertiary"> {{ data.incidenza_7d | number }} </ion-badge>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Guariti</ion-label>
+          <ion-badge slot="end" color="success"> {{ data.variazione_dimessi_guariti | number }} </ion-badge>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-list>

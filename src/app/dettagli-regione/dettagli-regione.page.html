@@ -1,0 +1,130 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      {{ pageTitle }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ pageTitle }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-item>
+    <ion-select *ngIf="listRegioni" [(ngModel)]="selectedRegion" (ionChange)="selectedRegionFn()" [compareWith]="compareFn" placeholder="Seleziona una regione">
+      <ion-select-option *ngFor="let regione of listRegioni" [value]="regione.codice_regione" > {{ regione.denominazione_regione }} </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              <ion-item>
+                <ion-label>Andamento province</ion-label>
+              </ion-item>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <canvas #lineCanvas style="position: relative; height:20vmin; width:20vmin"></canvas>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              <ion-item>
+                <ion-label>Andamento incidenza province</ion-label>
+              </ion-item>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <canvas #lineCanvas2 style="position: relative; height:20vmin; width:20vmin"></canvas>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-card *ngIf="latestProvince" >
+    <ion-card-header>
+      <ion-card-title>
+        <ion-item>
+          <ion-label>Tabella riassuntiva</ion-label>
+          <ion-button slot="end" fill="outline" (click)="switchContent()"><ion-icon [name]="openIcon"></ion-icon></ion-button>
+        </ion-item>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content [style]="cardContentStyle">
+      <ngx-datatable
+              class="bootstrap expandable"
+              [limit]="22"
+              [rows]="latestProvince"
+              rowHeight="auto"
+              [columnMode]="'fixed'"
+              [sortType]="'multi'"
+              headerHeight="auto"
+              [scrollbarH]="true">
+        <ngx-datatable-column name="provincia" [minWidth]="210" maxWidth="auto">
+          <ng-template ngx-datatable-header-template>
+            <span>Provincia</span>
+          </ng-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.denominazione_provincia }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="totale_casi"  [maxWidth]="110" maxWidth="auto">
+          <ng-template ngx-datatable-header-template>
+            <span>Casi</span>
+          </ng-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <!--        {{ row.tamponi_su_positivi }}-->
+            {{ row.totale_casi | number}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="variazione_totale_casi" [maxWidth]="150" minWidth="auto">
+          <ng-template ngx-datatable-header-template>
+            <span>Variazione casi</span>
+          </ng-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <!--        {{ row.casi_su_positivi }}-->
+            {{ row.variazione_totale_casi | number}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="percentuale_variazione_totale_casi" [maxWidth]="180">
+          <ng-template ngx-datatable-header-template>
+            <span>Percentuale incremento casi</span>
+          </ng-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.percentuale_variazione_totale_casi | percent:'1.0-2'}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="incidenza" [maxWidth]="500" minWidth="auto">
+          <ng-template ngx-datatable-header-template>
+            <span>Incidenza (casi su 100.000 abitanti)</span>
+          </ng-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.incidenza | number }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="incidenza_7d" >
+          <ng-template ngx-datatable-header-template>
+            <span>Incidenza a 7 gg (casi su 100.000 abitanti)</span>
+          </ng-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.incidenza_7d | number}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-footer></ngx-datatable-footer>
+      </ngx-datatable>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

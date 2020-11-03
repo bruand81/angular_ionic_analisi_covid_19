@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-const endpoint = 'http://127.0.0.1:8000/api/';
+const endpoint = 'https://antarescloud.antaresnet.org:8443/api/';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   getListRegioni(): Observable<any> {
-    return this.http.get(endpoint + 'listregioni/').pipe(catchError(this.handleError));
+    return this.http.get(endpoint + 'list/').pipe(catchError(this.handleError));
   }
 
   getLatestRegioni(value?: number): Observable<any> {
@@ -25,12 +25,16 @@ export class ApiService {
     }
   }
 
-  getLatestProvince(): Observable<any> {
-    return this.http.get(endpoint + 'province/').pipe(catchError(this.handleError));
+  getLatestProvince(value: number): Observable<any> {
+    return this.http.get(endpoint + 'province/?codice_regione=' + value).pipe(catchError(this.handleError));
+  }
+
+  getProvinceInRegione(value: number): Observable<any> {
+    return this.http.get(endpoint + 'province/?limit=1000&max_days=30&codice_regione=' + value).pipe(catchError(this.handleError));
   }
 
   getRiepilogoRegioni(value: number): Observable<any> {
-    return this.http.get(endpoint + 'riepilogoregioni/?codice_regione=' + value).pipe(catchError(this.handleError));
+    return this.http.get(endpoint + 'riepilogo/?codice_regione=' + value).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse): any {

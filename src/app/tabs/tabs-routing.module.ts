@@ -16,8 +16,12 @@ const routes: Routes = [
         loadChildren: () => import('../province/province.module').then(m => m.ProvincePageModule)
       },
       {
+        path: 'dettagli-regione',
+        loadChildren: () => import('../dettagli-regione/dettagli-regione.module').then(m => m.DettagliRegionePageModule)
+      },
+      {
         path: 'info',
-        loadChildren: () => import('../info/info.module').then(m => m.Tab3PageModule)
+        loadChildren: () => import('../info/info.module').then(m => m.InfoPageModule)
       },
       {
         path: '',
