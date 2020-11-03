@@ -1,0 +1,13 @@
+{
+  "appId": "org.antaresnet.analisicovid",
+  "appName": "analisi_covid_19",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

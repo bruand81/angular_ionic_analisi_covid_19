@@ -1,0 +1,13 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>
+      <ion-item>
+        <ion-label>{{ title }}</ion-label>
+        <ion-button slot="end" fill="outline" (click)="switchContent()"><ion-icon [name]="openIcon"></ion-icon></ion-button>
+      </ion-item>
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content [style]="cardContentStyle">
+    <canvas #lineCanvas [id]="chartId" style="position: relative; height:20vh; width:20vw"></canvas>
+  </ion-card-content>
+</ion-card>
