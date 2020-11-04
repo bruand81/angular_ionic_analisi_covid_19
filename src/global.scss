@@ -31,3 +31,11 @@
 @import 'assets/styles/ngx-datatable/_material.css';
 @import 'assets/styles/ngx-datatable/_bootstrap.css';
 @import 'assets/styles/ngx-datatable/_icons.css';
+
+ion-select {
+  color: #1632c4;
+  font-size: 2em;
+  font-weight: bolder;
+  --placeholder-color: #971e49;
+  --placeholder-opacity: 1;
+}

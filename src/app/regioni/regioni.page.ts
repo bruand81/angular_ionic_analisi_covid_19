@@ -8,6 +8,7 @@ import {BehaviorSubject} from 'rxjs';
 import * as d3 from 'd3';
 import {DatePipe, DecimalPipe, PercentPipe} from '@angular/common';
 import {ChartData} from '../models/chart-data';
+import {LoadingController} from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -27,14 +28,27 @@ export class RegioniPage implements OnInit{
   public cardContentStyle = 'display: none';
   chartData: ChartData[] = [];
   dataAggiornamento = '-';
+  loading: HTMLIonLoadingElement;
 
   constructor(
       public api: ApiService,
       private router: Router,
       public datepipe: DatePipe,
       private decimalPipe: DecimalPipe,
-      private percentPipe: PercentPipe
+      private percentPipe: PercentPipe,
+      public loadingController: LoadingController
   ) {}
+
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      message: 'Caricamento dati...',
+    });
+    await this.loading.present();
+    //
+    // const { role, data } = await this.loading.onDidDismiss();
+    // console.log('Loading dismissed!');
+  }
+
 
   getLatestRegioni() {
     this.api.getLatestRegioni().subscribe((resp: any) => {
@@ -74,7 +88,8 @@ export class RegioniPage implements OnInit{
     }
   }
 
-  ngOnInit() {
+  initOrRefresh(){
+    this.presentLoading();
     this.riepilogoRegioni.subscribe((data) => {
       if (data) {
         this.dataAggiornamento = this.datepipe.transform(data[data.length - 1].data, 'fullDate');
@@ -127,8 +142,15 @@ export class RegioniPage implements OnInit{
           colorScheme: d3.schemeOrRd[4],
         });
       }
+      if(this.loading){
+        this.loading.dismiss().then(r => console.log('Loading dismissed'));
+      }
     });
     this.getLatestRegioni();
     this.getRiepilogoRegioni(0);
+  }
+
+  ngOnInit() {
+    this.initOrRefresh();
   }
 }

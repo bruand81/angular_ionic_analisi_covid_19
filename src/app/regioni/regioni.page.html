@@ -3,6 +3,9 @@
     <ion-title>
       Riepilogo nazionale
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-icon slot="start" name="refresh" (click)="initOrRefresh()"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -11,9 +14,12 @@
     <ion-toolbar>
       <ion-title size="large">Riepilogo nazionale</ion-title>
     </ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-icon slot="start" name="refresh"></ion-icon>
+    </ion-buttons>
   </ion-header>
 
-  <ion-item><h3>{{ dataAggiornamento }}</h3></ion-item>
+  <ion-item><h3>{{ dataAggiornamento | titlecase}}</h3></ion-item>
 
   <app-dati-essenziali *ngIf="regioni" [data]="regioni[0]"></app-dati-essenziali>
 
@@ -48,7 +54,7 @@
               [sortType]="'multi'"
               headerHeight="auto"
               [scrollbarH]="true">
-        <ngx-datatable-column name="regione">
+        <ngx-datatable-column name="regione" [frozenLeft]="true">
           <ng-template ngx-datatable-header-template>
             <span>Regione</span>
           </ng-template>
