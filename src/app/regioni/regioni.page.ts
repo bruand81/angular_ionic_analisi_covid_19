@@ -29,6 +29,17 @@ export class RegioniPage implements OnInit{
   chartData: ChartData[] = [];
   dataAggiornamento = '-';
   loading: HTMLIonLoadingElement;
+  tableFields = {
+    denominazioneregione : 'denominazione_regione',
+    tamponisupositivi : 'percentuale_positivi_tamponi_giornaliera',
+    casisupositivi : 'percentuale_positivi_casi_giornaliera',
+    decessi : 'variazione_deceduti',
+    ti : 'variazione_terapia_intensiva',
+    ricoverati : 'variazione_ricoverati_con_sintomi',
+    guariti : 'variazione_dimessi_guariti',
+    incidenza7G : 'incidenza_7d',
+    cfr : 'cfr'
+  };
 
   constructor(
       public api: ApiService,
@@ -42,13 +53,26 @@ export class RegioniPage implements OnInit{
   async presentLoading() {
     this.loading = await this.loadingController.create({
       message: 'Caricamento dati...',
+      duration: 1000
     });
     await this.loading.present();
     //
-    // const { role, data } = await this.loading.onDidDismiss();
+    const { role, data } = await this.loading.onDidDismiss();
     // console.log('Loading dismissed!');
   }
 
+  onSort(event) {
+    console.log('Sort Event');
+    const field = this.tableFields[event.sorts[0].prop];
+    const dir = event.sorts[0].dir;
+    console.log(event.sorts[0].prop);
+    console.log(field);
+    let sortedList = this.regioni.sort((a, b) => (a[field] > b[field]) ? 1 : -1);
+    if (dir === 'desc') {
+      sortedList = sortedList.reverse();
+    }
+    this.regioni = sortedList;
+  }
 
   getLatestRegioni() {
     this.api.getLatestRegioni().subscribe((resp: any) => {
@@ -92,6 +116,9 @@ export class RegioniPage implements OnInit{
     this.presentLoading();
     this.riepilogoRegioni.subscribe((data) => {
       if (data) {
+        if (this.loading){
+          this.loading.dismiss().then(r => console.log('Loading dismissed'));
+        }
         this.dataAggiornamento = this.datepipe.transform(data[data.length - 1].data, 'fullDate');
         this.chartData = [];
         this.chartData.push({
@@ -141,9 +168,6 @@ export class RegioniPage implements OnInit{
           ],
           colorScheme: d3.schemeOrRd[4],
         });
-      }
-      if(this.loading){
-        this.loading.dismiss().then(r => console.log('Loading dismissed'));
       }
     });
     this.getLatestRegioni();

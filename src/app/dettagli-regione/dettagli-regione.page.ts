@@ -29,6 +29,14 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
   chartLabels = [];
   colorScale = d3.schemePaired;
   lineChart: any;
+  tableFields = {
+    denominazioneprovincia : 'denominazione_provincia',
+    totalecasi : 'totale_casi',
+    variazionetotalecasi : 'variazione_totale_casi',
+    percentualevariazionetotalecasi : 'percentuale_variazione_totale_casi',
+    incidenza : 'incidenza',
+    incidenza7D : 'incidenza_7d'
+  };
 
   constructor(
       public api: ApiService,
@@ -45,6 +53,19 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
     this.api.getListRegioni().subscribe((data) => {
       this.listRegioni = data;
     });
+  }
+
+  onSort(event) {
+    console.log('Sort Event');
+    const field = this.tableFields[event.sorts[0].prop];
+    const dir = event.sorts[0].dir;
+    console.log(event.sorts[0].prop);
+    console.log(field);
+    let sortedList = this.latestProvince.sort((a, b) => (a[field] > b[field]) ? 1 : -1);
+    if (dir === 'desc') {
+      sortedList = sortedList.reverse();
+    }
+    this.latestProvince = sortedList;
   }
 
   getListProvinceInRegione(value: number) {

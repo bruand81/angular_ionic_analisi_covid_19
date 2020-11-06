@@ -22,6 +22,14 @@
   <ion-item><h3>{{ dataAggiornamento | titlecase}}</h3></ion-item>
 
   <app-dati-essenziali *ngIf="regioni" [data]="regioni[0]"></app-dati-essenziali>
+  <ion-card *ngIf="!regioni">
+    <ion-header>
+      <ion-title>Dati non disponibili al momento</ion-title>
+    </ion-header>
+    <ion-card-content>
+      <ion-button expand="block" (click)="initOrRefresh()">Clicca qui per aggiornare</ion-button>
+    </ion-card-content>
+  </ion-card>
 
   <ion-grid>
     <ion-row>
@@ -35,7 +43,7 @@
 
 <!--  <app-draw-charts *ngIf="ospedaliChartData" [data]="ospedaliChartData"></app-draw-charts>-->
 
-  <ion-card>
+  <ion-card *ngIf="regioni">
     <ion-card-header>
       <ion-card-title>
         <ion-item>
@@ -46,15 +54,17 @@
     </ion-card-header>
     <ion-card-content [style]="cardContentStyle">
       <ngx-datatable
-              class="bootstrap expandable"
+              class="material expandable"
               [limit]="22"
               [rows]="regioni"
               rowHeight="auto"
               [columnMode]="'fixed'"
-              [sortType]="'multi'"
+              [sortType]="'single'"
               headerHeight="auto"
-              [scrollbarH]="true">
-        <ngx-datatable-column name="regione" [frozenLeft]="true">
+              [scrollbarH]="true"
+              [externalSorting]="true"
+              (sort)="onSort($event)">
+        <ngx-datatable-column name="denominazioneregione" [frozenLeft]="true">
           <ng-template ngx-datatable-header-template>
             <span>Regione</span>
           </ng-template>
@@ -62,7 +72,7 @@
             {{ row.denominazione_regione }}
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="tamponi_su_positivi"  [minWidth]="210" maxWidth="auto" [sortable]="false">
+        <ngx-datatable-column name="tamponisupositivi"  [minWidth]="210" maxWidth="auto">
           <ng-template ngx-datatable-header-template>
             <span>Percentuale Positivi/Tamponi</span>
           </ng-template>
@@ -70,7 +80,7 @@
             {{ row.percentuale_positivi_tamponi_giornaliera | percent:'1.0-2'}} ({{ row.nuovi_positivi | number}} su {{ row.variazione_tamponi | number}})
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="casi_su_positivi" [minWidth]="210" maxWidth="auto" [sortable]="false">
+        <ngx-datatable-column name="casisupositivi" [minWidth]="210" maxWidth="auto">
           <ng-template ngx-datatable-header-template>
             <span>Percentuale Positivi/Casi testati</span>
           </ng-template>

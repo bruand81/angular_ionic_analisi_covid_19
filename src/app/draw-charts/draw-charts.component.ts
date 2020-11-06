@@ -51,7 +51,7 @@ export class DrawChartsComponent implements OnInit, OnChanges, AfterViewInit {
           fill: true,
           borderColor: colorScale[i % colorScale.length],
           backgroundColor: colorScale[i % colorScale.length] + '33',
-          lineTension: 0.2,
+          lineTension: 0.4,
           data: chartjsData,
           spanGaps: true,
         });

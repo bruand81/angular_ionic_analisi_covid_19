@@ -64,15 +64,17 @@
     </ion-card-header>
     <ion-card-content [style]="cardContentStyle">
       <ngx-datatable
-              class="bootstrap expandable"
+              class="material expandable"
               [limit]="22"
               [rows]="latestProvince"
               rowHeight="auto"
               [columnMode]="'fixed'"
-              [sortType]="'multi'"
+              [sortType]="'single'"
               headerHeight="auto"
-              [scrollbarH]="true">
-        <ngx-datatable-column name="provincia" [minWidth]="210" maxWidth="auto" [frozenLeft]="true">
+              [scrollbarH]="true"
+              [externalSorting]="true"
+              (sort)="onSort($event)">
+        <ngx-datatable-column name="denominazioneprovincia" [minWidth]="210" maxWidth="auto" [frozenLeft]="true">
           <ng-template ngx-datatable-header-template>
             <span>Provincia</span>
           </ng-template>
@@ -80,7 +82,7 @@
             {{ row.denominazione_provincia }}
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="totale_casi"  [maxWidth]="110" maxWidth="auto">
+        <ngx-datatable-column name="totalecasi"  [maxWidth]="110" minWidth="auto">
           <ng-template ngx-datatable-header-template>
             <span>Casi</span>
           </ng-template>
@@ -89,7 +91,7 @@
             {{ row.totale_casi | number}}
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="variazione_totale_casi" [maxWidth]="150" minWidth="auto">
+        <ngx-datatable-column name="variazionetotalecasi" [maxWidth]="150" minWidth="auto">
           <ng-template ngx-datatable-header-template>
             <span>Variazione casi</span>
           </ng-template>
@@ -98,7 +100,7 @@
             {{ row.variazione_totale_casi | number}}
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="percentuale_variazione_totale_casi" [maxWidth]="180">
+        <ngx-datatable-column name="percentualevariazionetotalecasi" [maxWidth]="180">
           <ng-template ngx-datatable-header-template>
             <span>Percentuale incremento casi</span>
           </ng-template>
@@ -114,7 +116,7 @@
             {{ row.incidenza | number }}
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="incidenza_7d" >
+        <ngx-datatable-column name="incidenza7d" >
           <ng-template ngx-datatable-header-template>
             <span>Incidenza a 7 gg (casi su 100.000 abitanti)</span>
           </ng-template>
