@@ -41,13 +41,32 @@ export class DrawChartsComponent implements OnInit, OnChanges, AfterViewInit {
       });
       const datasets = [];
       let i = 0;
+      let prevMax: number;
+      const idA = 'highValue';
+      const idB = 'lowValue';
+      let usedTwoAxis = false;
       this.data.chartLines.forEach((line) => {
-        const chartjsData = [];
+        const chartjsData: number[] = [];
+        let axisId = idA;
         data.forEach(item => {
           chartjsData.push(item[line.field]);
         });
+        const maxValue = Math.log(Math.max.apply(null, chartjsData));
+        if (!prevMax) {
+          prevMax = maxValue;
+        }
+        const distance = maxValue - prevMax;
+        if (Math.abs(distance) >= 1) {
+          usedTwoAxis = true;
+          axisId = (axisId === idA) ? idB : idA;
+        }
+
+        // console.log(line.title + ' - ' + distance);
+        // console.log(chartjsData);
+
         datasets.push({
           label: line.title,
+          yAxisID: axisId,
           fill: true,
           borderColor: colorScale[i % colorScale.length],
           backgroundColor: colorScale[i % colorScale.length] + '33',
@@ -58,13 +77,77 @@ export class DrawChartsComponent implements OnInit, OnChanges, AfterViewInit {
         i++;
       });
 
-      this.lineChart = new Chart(this.lineCanvas.nativeElement, {
+      let plugins = {};
+      let ticks = {};
+      let tooltips = {};
+      if (this.data.type === 'percentage') {
+        plugins = {
+          datalabels: {
+            formatter: (value, ctx) => {
+              return (value * 100).toFixed(2) + '%';
+            }
+          }
+        };
+
+        ticks = {
+          callback: (value, index, values ) => {
+            return (value * 100).toFixed(0) + '%';
+          }
+        };
+
+        tooltips = {
+          callbacks: {
+            label: (tooltipItem, tooltipData) => {
+              // get the concerned dataset
+              const dataset = tooltipData.datasets[tooltipItem.datasetIndex];
+              let label = dataset.label || '';
+
+              if (label) {
+                label += ': ';
+              }
+              // get the current items value
+              const currentValue = dataset.data[tooltipItem.index];
+              // calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+              const percentage = (currentValue * 100);
+
+              return label + percentage.toFixed(2) + '%';
+            }
+          }
+        };
+      }
+
+      const yAxes = [{
+        id: idA,
+        type: 'linear',
+        position: 'left',
+        ticks
+      }];
+      if (usedTwoAxis) {
+        yAxes.push({
+          id: idB,
+          type: 'linear',
+          position: 'right',
+          ticks
+        });
+      }
+
+      const chart = {
         type: 'line',
         data: {
           labels: chartjsLabels,
-          datasets
+          datasets,
+        },
+        options: {
+          scales: {
+            yAxes
+          },
+          plugins,
+          tooltips
         }
-      });
+      };
+
+      // console.log(chart);
+      this.lineChart = new Chart(this.lineCanvas.nativeElement, chart);
     }
   }
 

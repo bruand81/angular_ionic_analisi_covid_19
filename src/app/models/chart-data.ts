@@ -8,4 +8,5 @@ export class ChartData {
         title: string;
     }[];
     colorScheme: readonly string[];
+    type: string;
 }

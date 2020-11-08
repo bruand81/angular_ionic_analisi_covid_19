@@ -143,6 +143,7 @@ export class RegioniPage implements OnInit{
             }
           ],
           colorScheme: d3.schemePaired,
+          type: 'numeric'
         });
 
         this.chartData.push({
@@ -167,6 +168,32 @@ export class RegioniPage implements OnInit{
             }
           ],
           colorScheme: d3.schemeOrRd[4],
+          type: 'numeric'
+        });
+
+        this.chartData.push({
+          title: 'Grafico percentuali',
+          data,
+          chartLines: [
+            {
+              field: 'percentuale_positivi_casi_giornaliera',
+              title: 'Postivi / casi testati'
+            },
+            {
+              field: 'percentuale_variazione_terapia_intensiva',
+              title: 'Terapia intensiva'
+            },
+            {
+              field: 'percentuale_variazione_deceduti',
+              title: 'Decessi'
+            },
+            {
+              field: 'cfr',
+              title: 'Case Fatality Rate'
+            }
+          ],
+          colorScheme: d3.schemeOrRd[4],
+          type: 'percentage'
         });
       }
     });
