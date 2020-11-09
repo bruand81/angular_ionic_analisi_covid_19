@@ -7,6 +7,8 @@ import { InfoPage } from './info.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { InfoPageRoutingModule } from './info-routing.module'
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {SwipeModule} from '../swipe/swipe.module';
 
 @NgModule({
   imports: [
@@ -16,6 +18,7 @@ import { InfoPageRoutingModule } from './info-routing.module'
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: InfoPage }]),
     InfoPageRoutingModule,
+    SwipeModule
   ],
   declarations: [InfoPage]
 })

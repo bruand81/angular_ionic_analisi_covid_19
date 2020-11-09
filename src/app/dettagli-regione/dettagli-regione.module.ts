@@ -8,6 +8,7 @@ import { DettagliRegionePageRoutingModule } from './dettagli-regione-routing.mod
 
 import { DettagliRegionePage } from './dettagli-regione.page';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {SwipeModule} from '../swipe/swipe.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
     FormsModule,
     IonicModule,
     DettagliRegionePageRoutingModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    SwipeModule
   ],
   declarations: [DettagliRegionePage]
 })

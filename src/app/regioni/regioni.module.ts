@@ -8,6 +8,7 @@ import { RegioniPageRoutingModule } from './regioni-routing.module';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {DrawChartsComponentModule} from '../draw-charts/draw-charts-component.module';
 import {DatiEssenzialiComponentModule} from '../dati-essenziali/dati-essenziali-component.module';
+import {SwipeModule} from '../swipe/swipe.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import {DatiEssenzialiComponentModule} from '../dati-essenziali/dati-essenziali-
     DrawChartsComponentModule,
     DatiEssenzialiComponentModule,
     RegioniPageRoutingModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    SwipeModule
   ],
     declarations: [RegioniPage],
 })

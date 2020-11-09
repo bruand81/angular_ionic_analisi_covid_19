@@ -6,6 +6,9 @@ import {Riepilogoregioni} from '../models/riepilogoregioni';
 import * as d3 from 'd3';
 import {ChartData} from '../models/chart-data';
 import {Regioni} from '../models/regioni';
+import {Router} from '@angular/router';
+import {LoadingController} from '@ionic/angular';
+import {PathNavigatorSupportService} from '../service/path-navigator-support.service';
 
 @Component({
   selector: 'app-tab2',
@@ -18,9 +21,12 @@ export class ProvincePage implements OnInit{
   riepilogoRegioni = new BehaviorSubject<Riepilogoregioni[]>(null);
   chartData: ChartData[] = [];
   regioni: Regioni[];
+  viewId = 2;
 
   constructor(
       public api: ApiService,
+      private router: Router,
+      public pathNavigatorSupport: PathNavigatorSupportService
   ) {}
 
   getListRegioni(){
@@ -50,7 +56,18 @@ export class ProvincePage implements OnInit{
     return e1 && e2 ? e1 === e2 : e1 === e2;
   }
 
+  onSwipeLeft($event) {
+    const path = this.pathNavigatorSupport.getPreviousPath(this.viewId);
+    this.router.navigate([path]);
+  }
+
+  onSwipeRight($event) {
+    const path = this.pathNavigatorSupport.getNextPath(this.viewId);
+    this.router.navigate([path]);
+  }
+
   ngOnInit(): void {
+    console.log(this.pathNavigatorSupport.getNextPath(this.viewId));
     this.getListRegioni();
     this.getLatestRegioni(this.selectedRegion);
     this.getRiepilogoRegioni(this.selectedRegion);

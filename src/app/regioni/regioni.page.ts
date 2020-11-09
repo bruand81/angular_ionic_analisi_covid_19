@@ -1,14 +1,14 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ApiService} from '../service/api.service';
-import {Router} from '@angular/router';
 import {Regioni} from '../models/regioni';
 import {Riepilogoregioni} from '../models/riepilogoregioni';
-import { Chart } from 'chart.js';
 import {BehaviorSubject} from 'rxjs';
 import * as d3 from 'd3';
-import {DatePipe, DecimalPipe, PercentPipe} from '@angular/common';
+import {DatePipe} from '@angular/common';
 import {ChartData} from '../models/chart-data';
 import {LoadingController} from '@ionic/angular';
+import {PathNavigatorSupportService} from '../service/path-navigator-support.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -40,14 +40,14 @@ export class RegioniPage implements OnInit{
     incidenza7G : 'incidenza_7d',
     cfr : 'cfr'
   };
+  viewId = 1;
 
   constructor(
       public api: ApiService,
       private router: Router,
       public datepipe: DatePipe,
-      private decimalPipe: DecimalPipe,
-      private percentPipe: PercentPipe,
-      public loadingController: LoadingController
+      public loadingController: LoadingController,
+      public pathNavigatorSupport: PathNavigatorSupportService
   ) {}
 
   async presentLoading() {
@@ -201,7 +201,18 @@ export class RegioniPage implements OnInit{
     this.getRiepilogoRegioni(0);
   }
 
+  onSwipeLeft($event) {
+    const path = this.pathNavigatorSupport.getPreviousPath(this.viewId);
+    this.router.navigate([path]);
+  }
+
+  onSwipeRight($event) {
+    const path = this.pathNavigatorSupport.getNextPath(this.viewId);
+    this.router.navigate([path]);
+  }
+
   ngOnInit() {
+    console.log(this.pathNavigatorSupport.getNextPath(this.viewId));
     this.initOrRefresh();
   }
 }

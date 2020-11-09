@@ -6,6 +6,9 @@ import {DatePipe, DecimalPipe, PercentPipe} from '@angular/common';
 import {ChartData} from '../models/chart-data';
 import { Chart } from 'chart.js';
 import * as d3 from 'd3';
+import {Router} from '@angular/router';
+import {LoadingController} from '@ionic/angular';
+import {PathNavigatorSupportService} from '../service/path-navigator-support.service';
 
 @Component({
   selector: 'app-dettagli-regione',
@@ -37,12 +40,15 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
     incidenza : 'incidenza',
     incidenza7D : 'incidenza_7d'
   };
+  viewId = 3;
 
   constructor(
       public api: ApiService,
       public datepipe: DatePipe,
       private decimalPipe: DecimalPipe,
-      private percentPipe: PercentPipe
+      private percentPipe: PercentPipe,
+      private router: Router,
+      public pathNavigatorSupport: PathNavigatorSupportService
   ) { }
 
   ngAfterViewInit(): void {
@@ -154,7 +160,18 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
     return this.percentage(value) + ' (' + numerator + '/' + denominator + ')';
   }
 
+  onSwipeLeft($event) {
+    const path = this.pathNavigatorSupport.getPreviousPath(this.viewId);
+    this.router.navigate([path]);
+  }
+
+  onSwipeRight($event) {
+    const path = this.pathNavigatorSupport.getNextPath(this.viewId);
+    this.router.navigate([path]);
+  }
+
   ngOnInit() {
+    console.log(this.pathNavigatorSupport.getNextPath(this.viewId));
     this.getListRegioni();
   }
 
