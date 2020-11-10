@@ -5,9 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import {ExploreContainerComponent} from '../explore-container/explore-container.component';
 import {DrawChartsComponent} from './draw-charts.component';
+import {PinchZoomModule} from 'ngx-pinch-zoom';
 
 @NgModule({
-    imports: [ CommonModule, FormsModule, IonicModule],
+    imports: [ CommonModule, FormsModule, IonicModule, PinchZoomModule],
     declarations: [DrawChartsComponent],
     exports: [DrawChartsComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

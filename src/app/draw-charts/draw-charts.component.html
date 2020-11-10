@@ -8,6 +8,8 @@
     </ion-card-title>
   </ion-card-header>
   <ion-card-content [style]="cardContentStyle">
-    <canvas #lineCanvas [id]="chartId" style="position: relative; height:20vmin; width:20vmin"></canvas>
+    <pinch-zoom backgroundColor="rgba(0,0,0,0)" [auto-zoom-out]="false" limit-zoom="10" overflow="visible">
+      <canvas #lineCanvas [id]="chartId" style="position: relative; height:20vmin; width:20vmin"></canvas>
+    </pinch-zoom>
   </ion-card-content>
 </ion-card>
