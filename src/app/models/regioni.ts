@@ -39,6 +39,7 @@ export interface Regioni {
     percentuale_variazione_ricoverati_con_sintomi: number;
     percentuale_variazione_tamponi: number;
     percentuale_variazione_terapia_intensiva: number;
+    percentuale_positivi_casi_7dma: number;
     variazione_casi_da_screening_3dma: number;
     variazione_casi_da_sospetto_diagnostico_3dma: number;
     variazione_casi_testati_3dma: number;

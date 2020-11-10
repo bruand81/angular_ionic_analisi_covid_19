@@ -188,6 +188,10 @@ export class RegioniPage implements OnInit{
               title: 'Decessi'
             },
             {
+              field: 'percentuale_positivi_casi_7dma',
+              title: 'Postivi / casi testati a 7 giorni'
+            },
+            {
               field: 'cfr',
               title: 'Case Fatality Rate'
             }

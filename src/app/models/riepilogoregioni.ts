@@ -15,5 +15,6 @@ export interface Riepilogoregioni {
     percentuale_positivi_casi_giornaliera: number;
     percentuale_variazione_terapia_intensiva: number;
     percentuale_variazione_deceduti: number;
+    percentuale_positivi_casi_7dma: number;
     cfr: number;
 }
