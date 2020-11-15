@@ -64,7 +64,7 @@
     </ion-card-header>
     <ion-card-content [style]="cardContentStyle">
       <ngx-datatable
-              class="material expandable"
+              class="bootstrap expandable"
               [limit]="22"
               [rows]="latestProvince"
               rowHeight="auto"
@@ -74,7 +74,7 @@
               [scrollbarH]="true"
               [externalSorting]="true"
               (sort)="onSort($event)">
-        <ngx-datatable-column name="denominazioneprovincia" [minWidth]="210" maxWidth="auto" [frozenLeft]="true">
+        <ngx-datatable-column name="denominazioneprovincia" [minWidth]="210" [maxWidth]="210">
           <ng-template ngx-datatable-header-template>
             <span>Provincia</span>
           </ng-template>
@@ -82,7 +82,7 @@
             {{ row.denominazione_provincia }}
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="totalecasi"  [maxWidth]="110" minWidth="auto">
+        <ngx-datatable-column name="totalecasi"  [maxWidth]="110" [minWidth]="110">
           <ng-template ngx-datatable-header-template>
             <span>Casi</span>
           </ng-template>

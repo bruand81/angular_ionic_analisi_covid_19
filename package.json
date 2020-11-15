@@ -1,7 +1,7 @@
 {
   "name": "analisi_covid_19",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
+  "version": "1.0.0",
+  "author": "Andrea Bruno",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
@@ -66,5 +66,5 @@
     "tslint": "~6.1.0",
     "typescript": "~3.9.5"
   },
-  "description": "An Ionic project"
+  "description": "Piattaforma per la visualizzazione e l'analisi dei dati della pandemia da SARS-CoV2 in Italia forniti dal Dipartimento della Protezione Civile Italiana"
 }

@@ -54,7 +54,7 @@
     </ion-card-header>
     <ion-card-content [style]="cardContentStyle">
       <ngx-datatable
-              class="material expandable"
+              class="bootstrap expandable"
               [limit]="22"
               [rows]="regioni"
               rowHeight="auto"
@@ -64,7 +64,7 @@
               [scrollbarH]="true"
               [externalSorting]="true"
               (sort)="onSort($event)">
-        <ngx-datatable-column name="denominazioneregione" [frozenLeft]="true">
+        <ngx-datatable-column name="denominazioneregione">
           <ng-template ngx-datatable-header-template>
             <span>Regione</span>
           </ng-template>
