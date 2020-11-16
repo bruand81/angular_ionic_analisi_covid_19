@@ -8,15 +8,15 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'regioni',
+        path: 'riepilogo',
         loadChildren: () => import('../regioni/regioni.module').then(m => m.RegioniPageModule)
       },
       {
-        path: 'province',
+        path: 'regione',
         loadChildren: () => import('../province/province.module').then(m => m.ProvincePageModule)
       },
       {
-        path: 'dettagli-regione',
+        path: 'province',
         loadChildren: () => import('../dettagli-regione/dettagli-regione.module').then(m => m.DettagliRegionePageModule)
       },
       {
@@ -25,7 +25,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/regioni',
+        redirectTo: '/tabs/riepilogo',
         pathMatch: 'full'
       }
     ]

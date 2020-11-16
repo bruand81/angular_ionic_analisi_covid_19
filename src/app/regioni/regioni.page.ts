@@ -61,6 +61,15 @@ export class RegioniPage implements OnInit{
     // console.log('Loading dismissed!');
   }
 
+  getIndexOfCountry(value: number): number {
+    const regionComparator = (element: Regioni) => element.codice_regione === value;
+
+    if (this.regioni) {
+      return this.regioni.findIndex(regionComparator);
+    }
+    return null;
+}
+
   onSort(event) {
     console.log('Sort Event');
     const field = this.tableFields[event.sorts[0].prop];

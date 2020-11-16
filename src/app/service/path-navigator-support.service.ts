@@ -5,10 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class PathNavigatorSupportService {
   paths = {
-    0: '/tabs/regioni',
-    1: '/tabs/regioni',
-    2: '/tabs/province',
-    3: '/tabs/dettagli-regione',
+    0: '/tabs/riepilogo',
+    1: '/tabs/riepilogo',
+    2: '/tabs/regione',
+    3: '/tabs/province',
     4: '/tabs/info'
   };
 
