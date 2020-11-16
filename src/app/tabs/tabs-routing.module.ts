@@ -32,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/regioni',
+    redirectTo: '/tabs/riepilogo',
     pathMatch: 'full'
   }
 ];
