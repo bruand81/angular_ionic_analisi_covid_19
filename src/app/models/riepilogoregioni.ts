@@ -17,4 +17,7 @@ export interface Riepilogoregioni {
     percentuale_variazione_deceduti: number;
     percentuale_positivi_casi_7dma: number;
     cfr: number;
+    variazione_terapia_intensiva_7dma: number;
+    variazione_deceduti_7dma: number;
+    variazione_ricoverati_con_sintomi_7dma: number;
 }

@@ -89,10 +89,6 @@ export class ProvincePage implements OnInit{
             {
               field: 'nuovi_positivi_3dma',
               title: 'Nuovi positivi (3DMA)'
-            },
-            {
-              field: 'incidenza_7d',
-              title: 'Incidenza a 7gg /10000 abitanti'
             }
           ],
           colorScheme: d3.schemePaired,
@@ -133,16 +129,16 @@ export class ProvincePage implements OnInit{
               title: 'Postivi / casi testati'
             },
             {
-              field: 'percentuale_variazione_terapia_intensiva',
-              title: 'Terapia intensiva'
+              field: 'percentuale_positivi_casi_7dma',
+              title: 'Postivi / casi testati a 7 giorni'
             },
+            // {
+            //   field: 'percentuale_variazione_terapia_intensiva',
+            //   title: 'Terapia intensiva'
+            // },
             {
               field: 'percentuale_variazione_deceduti',
               title: 'Decessi'
-            },
-            {
-              field: 'percentuale_positivi_casi_7dma',
-              title: 'Postivi / casi testati a 7 giorni'
             },
             {
               field: 'cfr',
@@ -151,6 +147,35 @@ export class ProvincePage implements OnInit{
           ],
           colorScheme: d3.schemeOrRd[4],
           type: 'percentage'
+        });
+
+        this.chartData.push({
+          title: 'Grafico A 7 giorni',
+          data,
+          chartLines: [
+            {
+              field: 'incidenza_7d',
+              title: 'Incidenza'
+            },
+            {
+              field: 'variazione_terapia_intensiva_7dma',
+              title: 'Terapia intensiva'
+            },
+            {
+              field: 'variazione_deceduti_7dma',
+              title: 'Decessi'
+            },
+            {
+              field: 'nuovi_positivi_7dma',
+              title: 'Nuovi positivi'
+            },
+            {
+              field: 'variazione_ricoverati_con_sintomi_7dma',
+              title: 'Ricoveri'
+            }
+          ],
+          colorScheme: d3.schemeOrRd[4],
+          type: 'numeric'
         });
       }
     });

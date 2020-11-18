@@ -56,7 +56,7 @@ export class DrawChartsComponent implements OnInit, OnChanges, AfterViewInit {
           prevMax = maxValue;
         }
         const distance = maxValue - prevMax;
-        if (Math.abs(distance) >= 1) {
+        if (Math.abs(distance) >= 4) {
           usedTwoAxis = true;
           axisId = (axisId === idA) ? idB : idA;
         }

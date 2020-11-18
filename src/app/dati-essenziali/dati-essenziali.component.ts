@@ -16,17 +16,17 @@ export class DatiEssenzialiComponent implements OnInit {
       private percentPipe: PercentPipe
   ) { }
 
-  percentage(value: number): string{
-    try {
-      return (value * 100).toFixed(2) + '%';
-    } catch (err) {
-      return 'NN';
-    }
-  }
-
-  formatatRate(value: number, numerator: number, denominator: number): string {
-    return this.percentage(value) + ' (' + numerator + '/' + denominator + ')';
-  }
+  // percentage(value: number): string{
+  //   try {
+  //     return (value * 100).toFixed(2) + '%';
+  //   } catch (err) {
+  //     return 'NN';
+  //   }
+  // }
+  //
+  // formatatRate(value: number, numerator: number, denominator: number): string {
+  //   return this.percentage(value) + ' (' + numerator + '/' + denominator + ')';
+  // }
 
   ngOnInit() {}
 
