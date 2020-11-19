@@ -3,12 +3,13 @@ import {ApiService} from '../service/api.service';
 import {Regioni} from '../models/regioni';
 import {Riepilogoregioni} from '../models/riepilogoregioni';
 import {BehaviorSubject} from 'rxjs';
-import * as d3 from 'd3';
+// import * as d3 from 'd3';
 import {DatePipe} from '@angular/common';
-import {ChartData} from '../models/chart-data';
-import {LoadingController} from '@ionic/angular';
+// import {ChartData} from '../models/chart-data';
+import {LoadingController, Platform} from '@ionic/angular';
 import {PathNavigatorSupportService} from '../service/path-navigator-support.service';
 import {Router} from '@angular/router';
+// import {GoogleChartInterface} from 'ng2-google-charts';
 
 @Component({
   selector: 'app-tab1',
@@ -26,9 +27,10 @@ export class RegioniPage implements OnInit{
   public showContent = false;
   public openIcon = 'chevron-down-outline';
   public cardContentStyle = 'display: none';
-  chartData: ChartData[] = [];
+  // chartData: ChartData[] = [];
   dataAggiornamento = '-';
   loading: HTMLIonLoadingElement;
+  // public groupAreaChart: GoogleChartInterface;
   tableFields = {
     denominazioneregione : 'denominazione_regione',
     tamponisupositivi : 'percentuale_positivi_tamponi_giornaliera',
@@ -41,14 +43,29 @@ export class RegioniPage implements OnInit{
     cfr : 'cfr'
   };
   viewId = 1;
+  // graphWidth = 400;
+  graphHeight = 400;
 
   constructor(
       public api: ApiService,
       private router: Router,
       public datepipe: DatePipe,
       public loadingController: LoadingController,
-      public pathNavigatorSupport: PathNavigatorSupportService
-  ) {}
+      public pathNavigatorSupport: PathNavigatorSupportService,
+      public platform: Platform
+  ) {
+    this.platform.ready().then(() => {
+      this.graphHeight = platform.width() * .50;
+      this.platform.resize.subscribe(() => {
+        this.resizeContent();
+      });
+    });
+  }
+
+  resizeContent(){
+    // console.log('resized');
+    this.initOrRefresh();
+  }
 
   async presentLoading() {
     this.loading = await this.loadingController.create({
@@ -123,118 +140,119 @@ export class RegioniPage implements OnInit{
 
   initOrRefresh(){
     this.presentLoading();
-    this.riepilogoRegioni.subscribe((data) => {
-      if (data) {
-        if (this.loading){
-          this.loading.dismiss().then(r => console.log('Loading dismissed'));
-        }
-        this.dataAggiornamento = this.datepipe.transform(data[data.length - 1].data, 'fullDate');
-        this.chartData = [];
-        this.chartData.push({
-          title: 'Grafico di riepilogo',
-          data,
-          chartLines: [
-            {
-              field: 'nuovi_positivi',
-              title: 'Nuovi positivi'
-            },
-            {
-              field: 'nuovi_positivi_7dma',
-              title: 'Nuovi positivi (7DMA)'
-            },
-            {
-              field: 'nuovi_positivi_3dma',
-              title: 'Nuovi positivi (3DMA)'
-            }
-          ],
-          colorScheme: d3.schemePaired,
-          type: 'numeric'
-        });
-
-        this.chartData.push({
-          title: 'Grafico carichi ospedalieri',
-          data,
-          chartLines: [
-            {
-              field: 'variazione_terapia_intensiva',
-              title: 'Terapie intensive'
-            },
-            {
-              field: 'variazione_ricoverati_con_sintomi',
-              title: 'Ricoverati con sintomi'
-            },
-            {
-              field: 'variazione_dimessi_guariti',
-              title: 'Guariti'
-            },
-            {
-              field: 'variazione_deceduti',
-              title: 'Decessi'
-            }
-          ],
-          colorScheme: d3.schemeOrRd[4],
-          type: 'numeric'
-        });
-
-        this.chartData.push({
-          title: 'Grafico percentuali',
-          data,
-          chartLines: [
-            {
-              field: 'percentuale_positivi_casi_giornaliera',
-              title: 'Postivi / casi testati'
-            },
-            {
-              field: 'percentuale_positivi_casi_7dma',
-              title: 'Postivi / casi testati a 7 giorni'
-            },
-            // {
-            //   field: 'percentuale_variazione_terapia_intensiva',
-            //   title: 'Terapia intensiva'
-            // },
-            {
-              field: 'percentuale_variazione_deceduti',
-              title: 'Decessi'
-            },
-            {
-              field: 'cfr',
-              title: 'Case Fatality Rate'
-            }
-          ],
-          colorScheme: d3.schemeOrRd[4],
-          type: 'percentage'
-        });
-
-        this.chartData.push({
-          title: 'Grafico A 7 giorni',
-          data,
-          chartLines: [
-            {
-              field: 'incidenza_7d',
-              title: 'Incidenza'
-            },
-            {
-              field: 'variazione_terapia_intensiva_7dma',
-              title: 'Terapia intensiva'
-            },
-            {
-              field: 'variazione_deceduti_7dma',
-              title: 'Decessi'
-            },
-            {
-              field: 'nuovi_positivi_7dma',
-              title: 'Nuovi positivi'
-            },
-            {
-              field: 'variazione_ricoverati_con_sintomi_7dma',
-              title: 'Ricoveri'
-            }
-          ],
-          colorScheme: d3.schemeOrRd[4],
-          type: 'numeric'
-        });
-      }
-    });
+    // this.loadGroupAreaChart();
+    // this.riepilogoRegioni.subscribe((data) => {
+    //   if (data) {
+    //     if (this.loading){
+    //       this.loading.dismiss().then(r => {});
+    //     }
+    //     this.dataAggiornamento = this.datepipe.transform(data[data.length - 1].data, 'fullDate');
+    //     this.chartData = [];
+    //     this.chartData.push({
+    //       title: 'Grafico di riepilogo',
+    //       data,
+    //       chartLines: [
+    //         {
+    //           field: 'nuovi_positivi',
+    //           title: 'Nuovi positivi'
+    //         },
+    //         {
+    //           field: 'nuovi_positivi_7dma',
+    //           title: 'Nuovi positivi (7DMA)'
+    //         },
+    //         {
+    //           field: 'nuovi_positivi_3dma',
+    //           title: 'Nuovi positivi (3DMA)'
+    //         }
+    //       ],
+    //       colorScheme: d3.schemePaired,
+    //       type: 'numeric'
+    //     });
+    //
+    //     this.chartData.push({
+    //       title: 'Grafico carichi ospedalieri',
+    //       data,
+    //       chartLines: [
+    //         {
+    //           field: 'variazione_terapia_intensiva',
+    //           title: 'Terapie intensive'
+    //         },
+    //         {
+    //           field: 'variazione_ricoverati_con_sintomi',
+    //           title: 'Ricoverati con sintomi'
+    //         },
+    //         {
+    //           field: 'variazione_dimessi_guariti',
+    //           title: 'Guariti'
+    //         },
+    //         {
+    //           field: 'variazione_deceduti',
+    //           title: 'Decessi'
+    //         }
+    //       ],
+    //       colorScheme: d3.schemeOrRd[4],
+    //       type: 'numeric'
+    //     });
+    //
+    //     this.chartData.push({
+    //       title: 'Grafico percentuali',
+    //       data,
+    //       chartLines: [
+    //         {
+    //           field: 'percentuale_positivi_casi_giornaliera',
+    //           title: 'Postivi / casi testati'
+    //         },
+    //         {
+    //           field: 'percentuale_positivi_casi_7dma',
+    //           title: 'Postivi / casi testati a 7 giorni'
+    //         },
+    //         // {
+    //         //   field: 'percentuale_variazione_terapia_intensiva',
+    //         //   title: 'Terapia intensiva'
+    //         // },
+    //         {
+    //           field: 'percentuale_variazione_deceduti',
+    //           title: 'Decessi'
+    //         },
+    //         {
+    //           field: 'cfr',
+    //           title: 'Case Fatality Rate'
+    //         }
+    //       ],
+    //       colorScheme: d3.schemeOrRd[4],
+    //       type: 'percentage'
+    //     });
+    //
+    //     this.chartData.push({
+    //       title: 'Grafico A 7 giorni',
+    //       data,
+    //       chartLines: [
+    //         {
+    //           field: 'incidenza_7d',
+    //           title: 'Incidenza'
+    //         },
+    //         {
+    //           field: 'variazione_terapia_intensiva_7dma',
+    //           title: 'Terapia intensiva'
+    //         },
+    //         {
+    //           field: 'variazione_deceduti_7dma',
+    //           title: 'Decessi'
+    //         },
+    //         {
+    //           field: 'nuovi_positivi_7dma',
+    //           title: 'Nuovi positivi'
+    //         },
+    //         {
+    //           field: 'variazione_ricoverati_con_sintomi_7dma',
+    //           title: 'Ricoveri'
+    //         }
+    //       ],
+    //       colorScheme: d3.schemeOrRd[4],
+    //       type: 'numeric'
+    //     });
+    //   }
+    // });
     this.getLatestRegioni();
     this.getRiepilogoRegioni(0);
   }
@@ -250,7 +268,7 @@ export class RegioniPage implements OnInit{
   }
 
   ngOnInit() {
-    console.log(this.pathNavigatorSupport.getNextPath(this.viewId));
+    // console.log(this.pathNavigatorSupport.getNextPath(this.viewId));
     this.initOrRefresh();
   }
 }

@@ -21,12 +21,14 @@
 
   <app-dati-essenziali *ngIf="regioni" [data]="regioni[0]"></app-dati-essenziali>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col *ngFor="let data of chartData">
-        <app-draw-charts [data]="data"></app-draw-charts>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <app-grafici [data]="riepilogoRegioni" (clickRefresh)="refresh()" [height]="graphHeight"></app-grafici>
+
+<!--  <ion-grid>-->
+<!--    <ion-row>-->
+<!--      <ion-col *ngFor="let data of chartData">-->
+<!--        <app-draw-charts [data]="data"></app-draw-charts>-->
+<!--      </ion-col>-->
+<!--    </ion-row>-->
+<!--  </ion-grid>-->
 
 </ion-content>

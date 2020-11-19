@@ -11,6 +11,7 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {DrawChartsComponentModule} from '../draw-charts/draw-charts-component.module';
 import {DatiEssenzialiComponentModule} from '../dati-essenziali/dati-essenziali-component.module';
 import {SwipeModule} from '../swipe/swipe.module';
+import {GraficiComponentModule} from '../grafici/grafici-component.module';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import {SwipeModule} from '../swipe/swipe.module';
     DatiEssenzialiComponentModule,
     ProvincePageRoutingModule,
     NgxDatatableModule,
-    SwipeModule
+    SwipeModule,
+    GraficiComponentModule
   ],
   declarations: [ProvincePage],
 })

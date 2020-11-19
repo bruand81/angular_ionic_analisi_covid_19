@@ -34,6 +34,7 @@
     "chart.js": "^2.9.4",
     "cordova-plugin-inappbrowser": "^4.0.0",
     "d3": "^6.2.0",
+    "ng2-google-charts": "^6.1.0",
     "ngx-pinch-zoom": "^2.5.4",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
