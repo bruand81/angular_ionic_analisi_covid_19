@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Riepilogoregioni} from '../models/riepilogoregioni';
 import {ChartsInterface} from './charts-interface';
 import {BehaviorSubject} from 'rxjs';
-import {DatePipe} from '@angular/common';
+import {DatePipe, PercentPipe} from '@angular/common';
 import {PathNavigatorSupportService} from '../service/path-navigator-support.service';
 import {Platform} from '@ionic/angular';
 import {GoogleChartsDataTable} from 'ng2-google-charts/lib/google-charts-datatable';
@@ -20,6 +20,7 @@ export class GraficiComponent implements OnInit {
   public numCol = 2;
   constructor(
       public datepipe: DatePipe,
+      public percentage: PercentPipe,
       public platform: Platform
   ) {
     this.platform.ready().then(() => {
@@ -82,10 +83,20 @@ export class GraficiComponent implements OnInit {
         };
         this.charts = [];
         let dataTable = [];
-        dataTable.push(['Data', 'Nuovi positivi', 'Nuovi positivi (3DMA)', 'Nuovi positivi (3DMA)']);
+        dataTable.push([
+          ['domain', 'Data'],
+          ['number', 'Nuovi positivi'],
+          {type: 'number', role: 'annotation'},
+          ['number', 'Nuovi positivi (3DMA)'],
+          {type: 'number', role: 'annotation'},
+          ['number', 'Nuovi positivi (3DMA)'],
+          {type: 'number', role: 'annotation'}]);
         dt.forEach((value) => {
           const date = this.datepipe.transform(value.data, 'dd, MMM');
-          dataTable.push([date, value.nuovi_positivi, value.nuovi_positivi_3dma, value.nuovi_positivi_7dma]);
+          dataTable.push([date,
+            value.nuovi_positivi, value.nuovi_positivi,
+            value.nuovi_positivi_3dma, value.nuovi_positivi_3dma,
+            value.nuovi_positivi_7dma, value.nuovi_positivi_7dma]);
         });
         this.charts.push({
           title: 'Riepilogo',
@@ -98,11 +109,23 @@ export class GraficiComponent implements OnInit {
         });
 
         dataTable = [];
-        dataTable.push(['Data', 'Incidenza', 'Terapia intensiva', 'Decessi', 'Ricoveri']);
+        dataTable.push([
+          ['domain', 'Data'],
+          ['number', 'Incidenza'],
+          {type: 'number', role: 'annotation'},
+          ['number', 'Terapia intensiva'],
+          {type: 'number', role: 'annotation'},
+          ['number', 'Decessi'],
+          {type: 'number', role: 'annotation'},
+          ['number', 'Ricoveri'],
+          {type: 'number', role: 'annotation'}, ]);
         dt.forEach((value) => {
           const date = this.datepipe.transform(value.data, 'dd, MMM');
-          dataTable.push([date, value.incidenza_7d, value.variazione_terapia_intensiva_7dma, value.variazione_deceduti_7dma,
-            value.variazione_ricoverati_con_sintomi_7dma]);
+          dataTable.push([date,
+            value.incidenza_7d, value.incidenza_7d,
+            value.variazione_terapia_intensiva_7dma, value.variazione_terapia_intensiva_7dma,
+            value.variazione_deceduti_7dma, value.variazione_deceduti_7dma,
+            value.variazione_ricoverati_con_sintomi_7dma, value.variazione_ricoverati_con_sintomi_7dma]);
         });
         this.charts.push({
           title: 'Andamento a 7 giorni',
@@ -115,11 +138,20 @@ export class GraficiComponent implements OnInit {
         });
 
         dataTable = [];
-        dataTable.push(['Data', 'Terapia intensiva', 'Ricoveri', 'Decessi']);
+        dataTable.push([
+          ['domain', 'Data'],
+          ['number', 'Terapia intensiva'],
+          {type: 'number', role: 'annotation'},
+          ['number', 'Ricoveri'],
+          {type: 'number', role: 'annotation'},
+          ['number', 'Decessi'],
+          {type: 'number', role: 'annotation'}, ]);
         dt.forEach((value) => {
           const date = this.datepipe.transform(value.data, 'dd, MMM');
-          dataTable.push([date, value.variazione_terapia_intensiva, value.variazione_ricoverati_con_sintomi,
-            value.variazione_deceduti]);
+          dataTable.push([date,
+            value.variazione_terapia_intensiva, value.variazione_terapia_intensiva,
+            value.variazione_ricoverati_con_sintomi, value.variazione_ricoverati_con_sintomi,
+            value.variazione_deceduti, value.variazione_deceduti]);
         });
         this.charts.push({
           title: 'Carichi ospedalieri',
@@ -132,11 +164,24 @@ export class GraficiComponent implements OnInit {
         });
 
         dataTable = [];
-        dataTable.push(['Data', 'Positivi/Casi', 'Positivi/Casi - 7g', 'Decessi', 'Case Fatality Rate']);
+        dataTable.push([
+          ['domain', 'Data'],
+          ['number', 'Positivi/Casi'],
+          {type: 'string', role: 'annotation'},
+          ['number', 'Positivi/Casi - 7g'],
+          {type: 'string', role: 'annotation'},
+          ['number', 'Decessi'],
+          {type: 'string', role: 'annotation'},
+          ['number', 'Case Fatality Rate'],
+          {type: 'string', role: 'annotation'},]);
         dt.forEach((value) => {
           const date = this.datepipe.transform(value.data, 'dd, MMM');
-          dataTable.push([date, value.percentuale_positivi_casi_giornaliera, value.percentuale_positivi_casi_7dma,
-            value.percentuale_variazione_deceduti, value.cfr]);
+          dataTable.push([
+              date,
+            value.percentuale_positivi_casi_giornaliera, this.percentage.transform(value.percentuale_positivi_casi_giornaliera),
+            value.percentuale_positivi_casi_7dma, this.percentage.transform(value.percentuale_positivi_casi_7dma),
+            value.percentuale_variazione_deceduti, this.percentage.transform(value.percentuale_variazione_deceduti),
+            value.cfr, this.percentage.transform(value.cfr)]);
         });
         this.charts.push({
           title: 'Percentuali',
