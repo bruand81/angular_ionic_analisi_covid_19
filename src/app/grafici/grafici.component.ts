@@ -149,7 +149,7 @@ export class GraficiComponent implements OnInit, AfterViewInit{
           'Nuovi positivi (3DMA)',
           {type: 'number', role: 'annotation'}]);
         dt.forEach((value) => {
-          const date = this.datepipe.transform(value.data, 'dd, MMM');
+          const date = this.datepipe.transform(value.data, 'dd MMM');
           dataTable.push([date,
             value.nuovi_positivi,
             value.nuovi_positivi,
@@ -182,7 +182,7 @@ export class GraficiComponent implements OnInit, AfterViewInit{
           'Ricoveri',
           {type: 'number', role: 'annotation'}, ]);
         dt.forEach((value) => {
-          const date = this.datepipe.transform(value.data, 'dd, MMM');
+          const date = this.datepipe.transform(value.data, 'dd MMM');
           dataTable.push([date,
             value.incidenza_7d, value.incidenza_7d,
             value.variazione_terapia_intensiva_7dma,
@@ -251,7 +251,7 @@ export class GraficiComponent implements OnInit, AfterViewInit{
           {type: 'string', role: 'annotation'},
           {type: 'string', role: 'tooltip'}, ]);
         dt.forEach((value) => {
-          const date = this.datepipe.transform(value.data, 'dd, MMM');
+          const date = this.datepipe.transform(value.data, 'dd MMM');
           dataTable.push([
               date,
             value.percentuale_positivi_casi_giornaliera,

@@ -5,17 +5,18 @@ import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {PinchZoomModule} from 'ngx-pinch-zoom';
 import {GraficiComponent} from './grafici.component';
+import {GraficiProvinceComponent} from './grafici-province/grafici-province.component';
 
 
 
 @NgModule({
-  declarations: [GraficiComponent],
+  declarations: [GraficiComponent, GraficiProvinceComponent],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     Ng2GoogleChartsModule
   ],
-  exports: [GraficiComponent]
+  exports: [GraficiComponent, GraficiComponent, GraficiProvinceComponent]
 })
 export class GraficiComponentModule { }

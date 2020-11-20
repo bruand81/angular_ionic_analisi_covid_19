@@ -16,8 +16,8 @@ import {PathNavigatorSupportService} from '../service/path-navigator-support.ser
   styleUrls: ['./dettagli-regione.page.scss'],
 })
 export class DettagliRegionePage implements OnInit, AfterViewInit {
-  @ViewChild('lineCanvas') private lineCanvas: ElementRef;
-  @ViewChild('lineCanvas2') private lineCanvas2: ElementRef;
+  // @ViewChild('lineCanvas') private lineCanvas: ElementRef;
+  // @ViewChild('lineCanvas2') private lineCanvas2: ElementRef;
   pageTitle = 'Dettagli regione';
   listRegioni: ListRegioni[];
   selectedRegion = 15;
@@ -26,7 +26,7 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
   public showContent = false;
   public openIcon = 'chevron-down-outline';
   public cardContentStyle = 'display: none';
-  chartData: ChartData[] = [];
+  // chartData: ChartData[] = [];
   codiciProvince: number[];
   dataset = [];
   chartLabels = [];
@@ -84,8 +84,8 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
       this.codiciProvince = this.latestProvince.filter(
           (thing, i, arr) => arr.findIndex(t => t.codice_provincia === thing.codice_provincia) === i
       ). map<number>((item) => item.codice_provincia);
-      this.drawGraph('variazione_totale_casi', this.lineCanvas);
-      this.drawGraph('incidenza_7d', this.lineCanvas2);
+      // this.drawGraph('variazione_totale_casi', this.lineCanvas);
+      // this.drawGraph('incidenza_7d', this.lineCanvas2);
     });
   }
 
@@ -108,45 +108,45 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
     }
   }
 
-  drawGraph(field: string, lineCanvasDest: ElementRef){
-    if (this.codiciProvince) {
-      this.dataset = [];
-      let i = 0;
-      for (const codice of this.codiciProvince) {
-        this.drawLine(codice, i, field);
-        i++;
-      }
-      this.lineChart = new Chart(lineCanvasDest.nativeElement, {
-        type: 'line',
-        data: {
-          labels: this.chartLabels,
-          datasets: this.dataset
-        }
-      });
-    }
-  }
-
-  drawLine(codiceProvincia: number, index: number, field: string){
-    const chartData: number[] = [];
-    this.chartLabels = [];
-    let lineTitle = '';
-    this.province.filter((provincia) => {
-      return provincia.codice_provincia === codiceProvincia;
-    }).reverse().forEach((provincia) => {
-      chartData.push(provincia[field]);
-      this.chartLabels.push(this.datepipe.transform(provincia.data, 'dd/MM'));
-      lineTitle = provincia.denominazione_provincia;
-    });
-    this.dataset.push({
-      label: lineTitle,
-      fill: true,
-      borderColor: this.colorScale[index % this.colorScale.length],
-      backgroundColor: this.colorScale[index % this.colorScale.length] + '33',
-      lineTension: 0.2,
-      data: chartData,
-      spanGaps: true,
-    });
-  }
+  // drawGraph(field: string, lineCanvasDest: ElementRef){
+  //   if (this.codiciProvince) {
+  //     this.dataset = [];
+  //     let i = 0;
+  //     for (const codice of this.codiciProvince) {
+  //       this.drawLine(codice, i, field);
+  //       i++;
+  //     }
+  //     this.lineChart = new Chart(lineCanvasDest.nativeElement, {
+  //       type: 'line',
+  //       data: {
+  //         labels: this.chartLabels,
+  //         datasets: this.dataset
+  //       }
+  //     });
+  //   }
+  // }
+  //
+  // drawLine(codiceProvincia: number, index: number, field: string){
+  //   const chartData: number[] = [];
+  //   this.chartLabels = [];
+  //   let lineTitle = '';
+  //   this.province.filter((provincia) => {
+  //     return provincia.codice_provincia === codiceProvincia;
+  //   }).reverse().forEach((provincia) => {
+  //     chartData.push(provincia[field]);
+  //     this.chartLabels.push(this.datepipe.transform(provincia.data, 'dd/MM'));
+  //     lineTitle = provincia.denominazione_provincia;
+  //   });
+  //   this.dataset.push({
+  //     label: lineTitle,
+  //     fill: true,
+  //     borderColor: this.colorScale[index % this.colorScale.length],
+  //     backgroundColor: this.colorScale[index % this.colorScale.length] + '33',
+  //     lineTension: 0.2,
+  //     data: chartData,
+  //     spanGaps: true,
+  //   });
+  // }
 
   percentage(value: number): string{
     try {
@@ -171,7 +171,7 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log(this.pathNavigatorSupport.getNextPath(this.viewId));
+    // console.log(this.pathNavigatorSupport.getNextPath(this.viewId));
     this.getListRegioni();
   }
 

@@ -1,0 +1,36 @@
+<ion-grid *ngIf="charts">
+  <div *ngFor="let chart of charts; let i = index">
+    <ion-row *ngIf="i%numCol==0">
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ charts[i].title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <google-chart [data]="charts[i].chart" class="chart"></google-chart>
+            <ion-button expand="block" color="primary" (click)="switchShowAnnotationFor(i)">Mostra/Nascondi valori</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col *ngIf="numCol==2 && charts.length > (i+1)">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ charts[i+1].title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <google-chart [data]="charts[i+1].chart" class="chart"></google-chart>
+            <ion-button expand="block" color="primary" (click)="switchShowAnnotationFor(i+1)">Mostra/Nascondi valori</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-grid>
+<ion-card *ngIf="!charts">
+  <ion-header>
+    <ion-title>Dati non disponibili al momento</ion-title>
+  </ion-header>
+  <ion-card-content>
+    <ion-button expand="block" (click)="refresh()">Clicca qui per aggiornare</ion-button>
+  </ion-card-content>
+</ion-card>

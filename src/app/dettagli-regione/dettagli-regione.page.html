@@ -19,38 +19,39 @@
     </ion-select>
   </ion-item>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>
-              <ion-item>
-                <ion-label>Andamento province</ion-label>
-              </ion-item>
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <canvas #lineCanvas style="position: relative; height:20vmin; width:20vmin"></canvas>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col>
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>
-              <ion-item>
-                <ion-label>Andamento incidenza province</ion-label>
-              </ion-item>
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <canvas #lineCanvas2 style="position: relative; height:20vmin; width:20vmin"></canvas>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <app-grafici-province *ngIf="province" [data]="province" [codiciProvince]="codiciProvince" height="400" [viewId]="viewId" (clickRefresh)="onSort(1)"></app-grafici-province>
+<!--  <ion-grid>-->
+<!--    <ion-row>-->
+<!--      <ion-col>-->
+<!--        <ion-card>-->
+<!--          <ion-card-header>-->
+<!--            <ion-card-title>-->
+<!--              <ion-item>-->
+<!--                <ion-label>Andamento province</ion-label>-->
+<!--              </ion-item>-->
+<!--            </ion-card-title>-->
+<!--          </ion-card-header>-->
+<!--          <ion-card-content>-->
+<!--            <canvas #lineCanvas style="position: relative; height:20vmin; width:20vmin"></canvas>-->
+<!--          </ion-card-content>-->
+<!--        </ion-card>-->
+<!--      </ion-col>-->
+<!--      <ion-col>-->
+<!--        <ion-card>-->
+<!--          <ion-card-header>-->
+<!--            <ion-card-title>-->
+<!--              <ion-item>-->
+<!--                <ion-label>Andamento incidenza province</ion-label>-->
+<!--              </ion-item>-->
+<!--            </ion-card-title>-->
+<!--          </ion-card-header>-->
+<!--          <ion-card-content>-->
+<!--            <canvas #lineCanvas2 style="position: relative; height:20vmin; width:20vmin"></canvas>-->
+<!--          </ion-card-content>-->
+<!--        </ion-card>-->
+<!--      </ion-col>-->
+<!--    </ion-row>-->
+<!--  </ion-grid>-->
 
 
   <ion-card *ngIf="latestProvince" >

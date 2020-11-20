@@ -9,6 +9,7 @@ import { DettagliRegionePageRoutingModule } from './dettagli-regione-routing.mod
 import { DettagliRegionePage } from './dettagli-regione.page';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {SwipeModule} from '../swipe/swipe.module';
+import {GraficiComponentModule} from '../grafici/grafici-component.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import {SwipeModule} from '../swipe/swipe.module';
     IonicModule,
     DettagliRegionePageRoutingModule,
     NgxDatatableModule,
-    SwipeModule
+    SwipeModule,
+      GraficiComponentModule
   ],
   declarations: [DettagliRegionePage]
 })
