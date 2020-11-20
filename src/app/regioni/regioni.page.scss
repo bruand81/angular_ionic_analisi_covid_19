@@ -3,4 +3,9 @@
   justify-content: center;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
