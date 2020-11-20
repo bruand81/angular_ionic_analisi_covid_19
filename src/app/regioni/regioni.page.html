@@ -19,7 +19,7 @@
     </ion-buttons>
   </ion-header>
 
-  <ion-item><h3>{{ dataAggiornamento | titlecase}}</h3></ion-item>
+  <ion-item><h3>{{ dataAggiornamento }}</h3></ion-item>
 
   <app-dati-essenziali *ngIf="regioni" [data]="regioni[getIndexOfCountry(0)]"></app-dati-essenziali>
   <ion-card *ngIf="!regioni">
@@ -37,97 +37,10 @@
       <ion-card-title>
         <ion-item>
           <ion-label>Tabella riassuntiva</ion-label>
-<!--          <ion-button slot="end" fill="outline" (click)="switchContent()"><ion-icon [name]="openIcon"></ion-icon></ion-button>-->
         </ion-item>
       </ion-card-title>
     </ion-card-header>
-<!--    <ion-card-content [style]="cardContentStyle">-->
-    <ion-card-content>
-<!--      <ngx-datatable-->
-<!--              class="bootstrap expandable"-->
-<!--              [limit]="22"-->
-<!--              [rows]="regioni"-->
-<!--              rowHeight="auto"-->
-<!--              [columnMode]="'fixed'"-->
-<!--              [sortType]="'single'"-->
-<!--              headerHeight="auto"-->
-<!--              [scrollbarH]="true"-->
-<!--              [externalSorting]="true"-->
-<!--              (sort)="onSort($event)">-->
-<!--        <ngx-datatable-column name="denominazioneregione">-->
-<!--          <ng-template ngx-datatable-header-template>-->
-<!--            <span>Regione</span>-->
-<!--          </ng-template>-->
-<!--          <ng-template let-row="row" ngx-datatable-cell-template>-->
-<!--            {{ row.denominazione_regione }}-->
-<!--          </ng-template>-->
-<!--        </ngx-datatable-column>-->
-<!--        <ngx-datatable-column name="tamponisupositivi"  [minWidth]="210" maxWidth="auto">-->
-<!--          <ng-template ngx-datatable-header-template>-->
-<!--            <span>Percentuale Positivi/Tamponi</span>-->
-<!--          </ng-template>-->
-<!--          <ng-template let-row="row" ngx-datatable-cell-template>-->
-<!--            {{ row.percentuale_positivi_tamponi_giornaliera | percent:'1.0-2'}} ({{ row.nuovi_positivi | number}} su {{ row.variazione_tamponi | number}})-->
-<!--          </ng-template>-->
-<!--        </ngx-datatable-column>-->
-<!--        <ngx-datatable-column name="casisupositivi" [minWidth]="210" maxWidth="auto">-->
-<!--          <ng-template ngx-datatable-header-template>-->
-<!--            <span>Percentuale Positivi/Casi testati</span>-->
-<!--          </ng-template>-->
-<!--          <ng-template let-row="row" ngx-datatable-cell-template>-->
-<!--            {{ row.percentuale_positivi_casi_giornaliera | percent:'1.0-2'}} ({{ row.nuovi_positivi | number}} su {{ row.variazione_casi_testati | number}})-->
-<!--          </ng-template>-->
-<!--        </ngx-datatable-column>-->
-<!--        <ngx-datatable-column name="decessi" [maxWidth]="85">-->
-<!--          <ng-template ngx-datatable-header-template>-->
-<!--            <span>Decessi</span>-->
-<!--          </ng-template>-->
-<!--          <ng-template let-row="row" ngx-datatable-cell-template>-->
-<!--            {{ row.variazione_deceduti | number }}-->
-<!--          </ng-template>-->
-<!--        </ngx-datatable-column>-->
-<!--        <ngx-datatable-column name="ti" [maxWidth]="95">-->
-<!--          <ng-template ngx-datatable-header-template>-->
-<!--            <span>Terapia Intensiva</span>-->
-<!--          </ng-template>-->
-<!--          <ng-template let-row="row" ngx-datatable-cell-template>-->
-<!--            {{ row.variazione_terapia_intensiva | number}}-->
-<!--          </ng-template>-->
-<!--        </ngx-datatable-column>-->
-<!--        <ngx-datatable-column name="ricoverati" [maxWidth]="110">-->
-<!--          <ng-template ngx-datatable-header-template>-->
-<!--            <span>Ricoverati con Sintomi</span>-->
-<!--          </ng-template>-->
-<!--          <ng-template let-row="row" ngx-datatable-cell-template>-->
-<!--            {{ row.variazione_ricoverati_con_sintomi | number}}-->
-<!--          </ng-template>-->
-<!--        </ngx-datatable-column>-->
-<!--        <ngx-datatable-column name="guariti" [maxWidth]="85">-->
-<!--          <ng-template ngx-datatable-header-template>-->
-<!--            <span>Guariti</span>-->
-<!--          </ng-template>-->
-<!--          <ng-template let-row="row" ngx-datatable-cell-template>-->
-<!--            {{ row.variazione_dimessi_guariti | number}}-->
-<!--          </ng-template>-->
-<!--        </ngx-datatable-column>-->
-<!--        <ngx-datatable-column name="incidenza7g" [maxWidth]="200">-->
-<!--          <ng-template ngx-datatable-header-template>-->
-<!--            <span>Incidenza a 7 giorni / 100.000 ab</span>-->
-<!--          </ng-template>-->
-<!--          <ng-template let-row="row" ngx-datatable-cell-template>-->
-<!--            {{ row.incidenza_7d | number}}-->
-<!--          </ng-template>-->
-<!--        </ngx-datatable-column>-->
-<!--        <ngx-datatable-column name="cfr" [maxWidth]="70">-->
-<!--          <ng-template ngx-datatable-header-template>-->
-<!--            <span>CFR</span>-->
-<!--          </ng-template>-->
-<!--          <ng-template let-row="row" ngx-datatable-cell-template>-->
-<!--            {{ row.cfr | percent:'1.0-2'}}-->
-<!--          </ng-template>-->
-<!--        </ngx-datatable-column>-->
-<!--        <ngx-datatable-footer></ngx-datatable-footer>-->
-<!--      </ngx-datatable>-->
+    <ion-card-content class="card-center">
       <google-chart [data]="tableChart"></google-chart>
     </ion-card-content>
   </ion-card>

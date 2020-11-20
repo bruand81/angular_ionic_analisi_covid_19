@@ -21,10 +21,9 @@ import {Ng2GoogleChartsModule} from 'ng2-google-charts';
     DrawChartsComponentModule,
     DatiEssenzialiComponentModule,
     RegioniPageRoutingModule,
-    NgxDatatableModule,
     SwipeModule,
     GraficiComponentModule,
-      Ng2GoogleChartsModule
+    Ng2GoogleChartsModule
   ],
     declarations: [RegioniPage],
 })

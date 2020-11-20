@@ -3,15 +3,11 @@ import {ApiService} from '../service/api.service';
 import {Regioni} from '../models/regioni';
 import {Riepilogoregioni} from '../models/riepilogoregioni';
 import {BehaviorSubject} from 'rxjs';
-// import * as d3 from 'd3';
 import {DatePipe, PercentPipe} from '@angular/common';
-// import {ChartData} from '../models/chart-data';
 import {LoadingController, Platform} from '@ionic/angular';
 import {PathNavigatorSupportService} from '../service/path-navigator-support.service';
 import {Router} from '@angular/router';
 import {GoogleChartInterface} from 'ng2-google-charts';
-import {ColorFormatInterface, FormatterInterface} from 'ng2-google-charts/lib/google-charts-datatable';
-// import {GoogleChartInterface} from 'ng2-google-charts';
 
 @Component({
   selector: 'app-tab1',
@@ -26,13 +22,8 @@ export class RegioniPage implements OnInit{
   previousPage: string;
   regioni: Regioni[];
   riepilogoRegioni = new BehaviorSubject<Riepilogoregioni[]>(null);
-  public showContent = false;
-  public openIcon = 'chevron-down-outline';
-  // public cardContentStyle = 'display: none';
-  // chartData: ChartData[] = [];
   dataAggiornamento = '-';
   loading: HTMLIonLoadingElement;
-  // public groupAreaChart: GoogleChartInterface;
   tableFields = {
     denominazioneregione : 'denominazione_regione',
     tamponisupositivi : 'percentuale_positivi_tamponi_giornaliera',
@@ -66,7 +57,6 @@ export class RegioniPage implements OnInit{
   }
 
   resizeContent(){
-    // console.log('resized');
     this.initOrRefresh();
   }
 
@@ -76,9 +66,7 @@ export class RegioniPage implements OnInit{
       duration: 1000
     });
     await this.loading.present();
-    //
     const { role, data } = await this.loading.onDidDismiss();
-    // console.log('Loading dismissed!');
   }
 
   getIndexOfCountry(value: number): number {
@@ -88,20 +76,7 @@ export class RegioniPage implements OnInit{
       return this.regioni.findIndex(regionComparator);
     }
     return null;
-}
-
-  // onSort(event) {
-  //   console.log('Sort Event');
-  //   const field = this.tableFields[event.sorts[0].prop];
-  //   const dir = event.sorts[0].dir;
-  //   console.log(event.sorts[0].prop);
-  //   console.log(field);
-  //   let sortedList = this.regioni.sort((a, b) => (a[field] > b[field]) ? 1 : -1);
-  //   if (dir === 'desc') {
-  //     sortedList = sortedList.reverse();
-  //   }
-  //   this.regioni = sortedList;
-  // }
+  }
 
   getLatestRegioni() {
     this.api.getLatestRegioni().subscribe((resp: any) => {
@@ -109,6 +84,7 @@ export class RegioniPage implements OnInit{
       this.nextPage = resp.next;
       this.previousPage = resp.previous;
       this.regioni = resp.results;
+      this.dataAggiornamento =  `Dati aggiornati al ${this.datepipe.transform(this.regioni[0].data, 'longDate')}`;
       this.tableChart = this.drawTable();
     });
   }
@@ -117,18 +93,6 @@ export class RegioniPage implements OnInit{
     this.api.getRiepilogoRegioni(value).subscribe((resp: any) => {
       this.riepilogoRegioni.next(resp);
     });
-  }
-
-  percentage(value: number): string{
-    try {
-      return (value * 100).toFixed(2) + '%';
-    } catch (err) {
-      return 'NN';
-    }
-  }
-
-  formatatRate(value: number, numerator: number, denominator: number): string {
-    return this.percentage(value) + ' (' + numerator + '/' + denominator + ')';
   }
 
   drawTable(): GoogleChartInterface {
@@ -193,7 +157,6 @@ export class RegioniPage implements OnInit{
         });
         dataTable.push(row);
       });
-      // console.log(dataTable);
 
       avgPerColumns.forEach((value, idx) => {
         if (value > 0) {
@@ -327,7 +290,6 @@ export class RegioniPage implements OnInit{
   }
 
   ngOnInit() {
-    // console.log(this.pathNavigatorSupport.getNextPath(this.viewId));
     this.initOrRefresh();
   }
 }

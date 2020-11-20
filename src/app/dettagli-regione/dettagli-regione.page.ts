@@ -3,11 +3,8 @@ import {ListRegioni} from '../models/list-regioni';
 import {ApiService} from '../service/api.service';
 import {Province} from '../models/province';
 import {DatePipe, DecimalPipe, PercentPipe} from '@angular/common';
-import {ChartData} from '../models/chart-data';
-import { Chart } from 'chart.js';
 import * as d3 from 'd3';
 import {Router} from '@angular/router';
-import {LoadingController} from '@ionic/angular';
 import {PathNavigatorSupportService} from '../service/path-navigator-support.service';
 import {GoogleChartInterface} from 'ng2-google-charts';
 
@@ -17,8 +14,6 @@ import {GoogleChartInterface} from 'ng2-google-charts';
   styleUrls: ['./dettagli-regione.page.scss'],
 })
 export class DettagliRegionePage implements OnInit, AfterViewInit {
-  // @ViewChild('lineCanvas') private lineCanvas: ElementRef;
-  // @ViewChild('lineCanvas2') private lineCanvas2: ElementRef;
   pageTitle = 'Dettagli regione';
   listRegioni: ListRegioni[];
   selectedRegion = 15;
@@ -27,7 +22,6 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
   public showContent = false;
   public openIcon = 'chevron-down-outline';
   public cardContentStyle = 'display: none';
-  // chartData: ChartData[] = [];
   codiciProvince: number[];
   dataset = [];
   chartLabels = [];
@@ -63,19 +57,6 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
     });
   }
 
-  // onSort(event) {
-  //   console.log('Sort Event');
-  //   const field = this.tableFields[event.sorts[0].prop];
-  //   const dir = event.sorts[0].dir;
-  //   console.log(event.sorts[0].prop);
-  //   console.log(field);
-  //   let sortedList = this.latestProvince.sort((a, b) => (a[field] > b[field]) ? 1 : -1);
-  //   if (dir === 'desc') {
-  //     sortedList = sortedList.reverse();
-  //   }
-  //   this.latestProvince = sortedList;
-  // }
-
   getListProvinceInRegione(value: number) {
     this.api.getProvinceInRegione(value).subscribe((data) => {
       this.province = data.results;
@@ -87,8 +68,6 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
       this.codiciProvince = this.latestProvince.filter(
           (thing, i, arr) => arr.findIndex(t => t.codice_provincia === thing.codice_provincia) === i
       ). map<number>((item) => item.codice_provincia);
-      // this.drawGraph('variazione_totale_casi', this.lineCanvas);
-      // this.drawGraph('incidenza_7d', this.lineCanvas2);
     });
   }
 
@@ -150,7 +129,6 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
         });
         dataTable.push(row);
       });
-      // console.log(dataTable);
 
       avgPerColumns.forEach((value, idx) => {
         if (value > 0) {
@@ -252,29 +230,6 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
     return null;
   }
 
-  // switchContent(){
-  //   this.showContent = !this.showContent;
-  //   if (this.showContent){
-  //     this.openIcon = 'chevron-up-outline';
-  //     this.cardContentStyle = 'display: block';
-  //   } else {
-  //     this.openIcon = 'chevron-down-outline';
-  //     this.cardContentStyle = 'display: none';
-  //   }
-  // }
-
-  percentage(value: number): string{
-    try {
-      return (value * 100).toFixed(2) + '%';
-    } catch (err) {
-      return 'NN';
-    }
-  }
-
-  formatatRate(value: number, numerator: number, denominator: number): string {
-    return this.percentage(value) + ' (' + numerator + '/' + denominator + ')';
-  }
-
   onSwipeLeft($event) {
     const path = this.pathNavigatorSupport.getPreviousPath(this.viewId);
     this.router.navigate([path]);
@@ -286,8 +241,8 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // console.log(this.pathNavigatorSupport.getNextPath(this.viewId));
     this.getListRegioni();
   }
 
+  refresh() {}
 }
