@@ -72,7 +72,10 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
   }
 
   selectedRegionFn() {
+    localStorage.setItem('selectedRegion', JSON.stringify(this.selectedRegion));
+    console.log('Region changed: ' + this.selectedRegion);
     this.getListProvinceInRegione(this.selectedRegion);
+    this.refresh();
   }
 
   compareFn(e1: number, e2: number): boolean {
@@ -241,8 +244,12 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.selectedRegion = JSON.parse(localStorage.getItem('selectedRegion') ) || 1;
     this.getListRegioni();
   }
 
-  refresh() {}
+  refresh() {
+    this.getListRegioni();
+    window.location.reload();
+  }
 }
