@@ -255,16 +255,16 @@ export class GraficiComponent implements OnInit, AfterViewInit{
           dataTable.push([
               date,
             value.percentuale_positivi_casi_giornaliera,
-            this.percentage.transform(value.percentuale_positivi_casi_giornaliera),
+            this.percentage.transform(value.percentuale_positivi_casi_giornaliera, '1.0-2'),
             this.percentageForTooltip(date, value.percentuale_positivi_casi_giornaliera, 'Positivi/Casi'),
             value.percentuale_positivi_casi_7dma,
-            this.percentage.transform(value.percentuale_positivi_casi_7dma),
+            this.percentage.transform(value.percentuale_positivi_casi_7dma, '1.0-2'),
             this.percentageForTooltip(date, value.percentuale_positivi_casi_7dma, 'Positivi/Casi - 7g'),
             value.percentuale_variazione_deceduti,
-            this.percentage.transform(value.percentuale_variazione_deceduti),
+            this.percentage.transform(value.percentuale_variazione_deceduti, '1.0-2'),
             this.percentageForTooltip(date, value.percentuale_variazione_deceduti, 'Decessi'),
             value.cfr,
-            this.percentage.transform(value.cfr),
+            this.percentage.transform(value.cfr, '1.0-2'),
             this.percentageForTooltip(date, value.cfr, 'Case Fatality Rate')
           ]);
         });
@@ -284,7 +284,7 @@ export class GraficiComponent implements OnInit, AfterViewInit{
   }
 
   percentageForTooltip(date: string, value: number, columnnName: string): string{
-    const result = `${date}\n${columnnName}: ${this.percentage.transform(value)}`;
+    const result = `${date}\n${columnnName}: ${this.percentage.transform(value, '1.0-2')}`;
     return result;
   }
 
