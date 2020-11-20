@@ -38,7 +38,7 @@
       <ion-button expand="block" (click)="initOrRefresh()">Clicca qui per aggiornare</ion-button>
     </ion-card-content>
   </ion-card>
-  <app-grafici [data]="riepilogoRegioni" [height]="graphHeight" (clickRefresh)="initOrRefresh()"></app-grafici>
+  <app-grafici [data]="riepilogoRegioni" [height]="graphHeight" [viewId]="viewId" (clickRefresh)="initOrRefresh()"></app-grafici>
 
 <!--  <ion-grid>-->
 <!--    <ion-row>-->

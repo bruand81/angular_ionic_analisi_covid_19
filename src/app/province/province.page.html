@@ -21,7 +21,7 @@
 
   <app-dati-essenziali *ngIf="regioni" [data]="regioni[0]"></app-dati-essenziali>
 
-  <app-grafici [data]="riepilogoRegioni" (clickRefresh)="refresh()" [height]="graphHeight"></app-grafici>
+  <app-grafici [data]="riepilogoRegioni" (clickRefresh)="refresh()" [height]="graphHeight" [viewId]="viewId"></app-grafici>
 
 <!--  <ion-grid>-->
 <!--    <ion-row>-->
