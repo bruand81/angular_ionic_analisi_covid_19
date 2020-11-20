@@ -7,7 +7,9 @@
                         <ion-card-title>{{ charts[i].title }}</ion-card-title>
                     </ion-card-header>
                     <ion-card-content>
-                        <google-chart [data]="charts[i].chart" class="chart"></google-chart>
+                        <pinch-zoom backgroundColor="rgba(0,0,0,0)" [auto-zoom-out]="false" limit-zoom="10" overflow="visible">
+                            <google-chart [data]="charts[i].chart" class="chart"></google-chart>
+                        </pinch-zoom>
                         <ion-button expand="block" color="primary" (click)="switchShowAnnotationFor(i)">Mostra/Nascondi valori</ion-button>
                     </ion-card-content>
                 </ion-card>
@@ -18,7 +20,9 @@
                         <ion-card-title>{{ charts[i+1].title }}</ion-card-title>
                     </ion-card-header>
                     <ion-card-content>
-                        <google-chart [data]="charts[i+1].chart" class="chart"></google-chart>
+                        <pinch-zoom backgroundColor="rgba(0,0,0,0)" [auto-zoom-out]="false" limit-zoom="10" overflow="visible">
+                            <google-chart [data]="charts[i+1].chart" class="chart"></google-chart>
+                        </pinch-zoom>
                         <ion-button expand="block" color="primary" (click)="switchShowAnnotationFor(i+1)">Mostra/Nascondi valori</ion-button>
                     </ion-card-content>
                 </ion-card>

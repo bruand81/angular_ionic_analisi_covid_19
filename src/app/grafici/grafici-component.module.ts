@@ -15,7 +15,8 @@ import {GraficiProvinceComponent} from './grafici-province/grafici-province.comp
     CommonModule,
     FormsModule,
     IonicModule,
-    Ng2GoogleChartsModule
+    Ng2GoogleChartsModule,
+    PinchZoomModule
   ],
   exports: [GraficiComponent, GraficiComponent, GraficiProvinceComponent]
 })

@@ -10,6 +10,7 @@ import { DettagliRegionePage } from './dettagli-regione.page';
 import {SwipeModule} from '../swipe/swipe.module';
 import {GraficiComponentModule} from '../grafici/grafici-component.module';
 import {Ng2GoogleChartsModule} from 'ng2-google-charts';
+import {PinchZoomModule} from 'ngx-pinch-zoom';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import {Ng2GoogleChartsModule} from 'ng2-google-charts';
     DettagliRegionePageRoutingModule,
     SwipeModule,
     GraficiComponentModule,
-    Ng2GoogleChartsModule
+    Ng2GoogleChartsModule,
+    PinchZoomModule
   ],
   declarations: [DettagliRegionePage]
 })

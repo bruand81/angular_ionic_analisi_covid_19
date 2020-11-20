@@ -41,7 +41,9 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <google-chart [data]="tableChart"></google-chart>
+      <pinch-zoom backgroundColor="rgba(0,0,0,0)" [auto-zoom-out]="false" limit-zoom="10" overflow="visible">
+        <google-chart [data]="tableChart"></google-chart>
+      </pinch-zoom>
     </ion-card-content>
   </ion-card>
 </ion-content>
