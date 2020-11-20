@@ -135,7 +135,7 @@ export class GraficiComponent implements OnInit, AfterViewInit{
             slantedText: true,
             slantedTextAngle: 20,
           },
-
+          vAxis: {}
         };
         this.charts = [];
         let dataTable = [];
@@ -250,6 +250,11 @@ export class GraficiComponent implements OnInit, AfterViewInit{
           'Case Fatality Rate',
           {type: 'string', role: 'annotation'},
           {type: 'string', role: 'tooltip'}, ]);
+
+        const option2 = Object.create(options);
+        option2.vAxis = {
+            format: '#.##%'
+        };
         dt.forEach((value) => {
           const date = this.datepipe.transform(value.data, 'dd MMM');
           dataTable.push([
@@ -275,7 +280,7 @@ export class GraficiComponent implements OnInit, AfterViewInit{
             chartType: 'AreaChart',
             dataTable,
             formatters,
-            options,
+            options: option2,
             view
           }
         });
