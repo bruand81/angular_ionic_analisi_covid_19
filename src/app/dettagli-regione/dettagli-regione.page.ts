@@ -9,6 +9,7 @@ import * as d3 from 'd3';
 import {Router} from '@angular/router';
 import {LoadingController} from '@ionic/angular';
 import {PathNavigatorSupportService} from '../service/path-navigator-support.service';
+import {GoogleChartInterface} from 'ng2-google-charts';
 
 @Component({
   selector: 'app-dettagli-regione',
@@ -41,6 +42,7 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
     incidenza7D : 'incidenza_7d'
   };
   viewId = 3;
+  tableChart: GoogleChartInterface;
 
   constructor(
       public api: ApiService,
@@ -61,18 +63,18 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
     });
   }
 
-  onSort(event) {
-    console.log('Sort Event');
-    const field = this.tableFields[event.sorts[0].prop];
-    const dir = event.sorts[0].dir;
-    console.log(event.sorts[0].prop);
-    console.log(field);
-    let sortedList = this.latestProvince.sort((a, b) => (a[field] > b[field]) ? 1 : -1);
-    if (dir === 'desc') {
-      sortedList = sortedList.reverse();
-    }
-    this.latestProvince = sortedList;
-  }
+  // onSort(event) {
+  //   console.log('Sort Event');
+  //   const field = this.tableFields[event.sorts[0].prop];
+  //   const dir = event.sorts[0].dir;
+  //   console.log(event.sorts[0].prop);
+  //   console.log(field);
+  //   let sortedList = this.latestProvince.sort((a, b) => (a[field] > b[field]) ? 1 : -1);
+  //   if (dir === 'desc') {
+  //     sortedList = sortedList.reverse();
+  //   }
+  //   this.latestProvince = sortedList;
+  // }
 
   getListProvinceInRegione(value: number) {
     this.api.getProvinceInRegione(value).subscribe((data) => {
@@ -81,6 +83,7 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
       this.latestProvince = data.results.filter((provincia) => {
         return provincia.data === maxdate;
       });
+      this.tableChart = this.drawTable();
       this.codiciProvince = this.latestProvince.filter(
           (thing, i, arr) => arr.findIndex(t => t.codice_provincia === thing.codice_provincia) === i
       ). map<number>((item) => item.codice_provincia);
@@ -97,55 +100,167 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
     return e1 && e2 ? e1 === e2 : e1 === e2;
   }
 
-  switchContent(){
-    this.showContent = !this.showContent;
-    if (this.showContent){
-      this.openIcon = 'chevron-up-outline';
-      this.cardContentStyle = 'display: block';
-    } else {
-      this.openIcon = 'chevron-down-outline';
-      this.cardContentStyle = 'display: none';
+  drawTable(): GoogleChartInterface {
+    if (this.latestProvince) {
+      let denum = 0;
+
+      const dataTable: any[] = [];
+      const headerRow = [
+        'ID',
+        'Regione',
+        'Provincia',
+        'Variazione casi',
+        'Percentuale variazione casi',
+        'Variazione casi a 3 giorni',
+        'Variazione casi a 7 giorni',
+        'Incidenza / 100.000 ab',
+        'Incidenza a 7 giorni / 100.000 ab',
+      ];
+      dataTable.push(headerRow);
+
+      const maxPerColumns: number[] = new Array(headerRow.length);
+      const minPerColumns: number[] = new Array(headerRow.length);
+      const avgPerColumns: number[] = new Array(headerRow.length);
+      maxPerColumns.fill(0);
+      minPerColumns.fill(0);
+      avgPerColumns.fill(0);
+
+      this.latestProvince.forEach(value => {
+        const row = [
+          value.codice_provincia, // 0
+          value.denominazione_regione, // 1
+          value.denominazione_provincia, // 2
+          value.variazione_totale_casi, // 3
+          value.percentuale_variazione_totale_casi, // 4
+          value.variazione_totale_casi_3dma, // 5
+          value.variazione_totale_casi_7dma, // 6
+          value.incidenza, // 7
+          value.incidenza_7d // 8
+        ];
+        const ids = [3, 4, 5, 6, 7, 8];
+        ids.forEach(id => {
+          if (minPerColumns[id] > row[id]){
+            minPerColumns[id] = (row[id] as number);
+          }
+          if (maxPerColumns[id] < row[id]){
+            maxPerColumns[id] = (row[id] as number);
+          }
+          avgPerColumns[id] += (row[id] as number);
+          denum += 1;
+        });
+        dataTable.push(row);
+      });
+      // console.log(dataTable);
+
+      avgPerColumns.forEach((value, idx) => {
+        if (value > 0) {
+          avgPerColumns[idx] = value / denum;
+        }
+      });
+
+      const colorFormatColumnsGreenToRedCol = [3, 4, 5, 6];
+      const colorFormatColumnsRedToGreenCol = [7, 8];
+      const colorFormats = [];
+
+      colorFormatColumnsGreenToRedCol.forEach(id => {
+        colorFormats.push({
+          columns: [id],
+          type: 'ColorFormat',
+          options: {
+            ranges: [{
+              from: minPerColumns[id] - 1,
+              to: avgPerColumns[id],
+              fromBgColor: '#ABEBC6',
+              toBgColor: '#AED6F1'
+            },
+              {
+                from: avgPerColumns[id],
+                to: maxPerColumns[id] + 1,
+                fromBgColor: '#AED6F1',
+                toBgColor: '#F5B7B1'
+              }
+            ]
+          }
+        });
+      });
+
+      colorFormatColumnsRedToGreenCol.forEach(id => {
+        colorFormats.push({
+          columns: [id],
+          type: 'ColorFormat',
+          options: {
+            ranges: [{
+              from: minPerColumns[id] - 1,
+              to: avgPerColumns[id] ,
+              fromBgColor: '#F5B7B1',
+              toBgColor: '#AED6F1'
+            },
+              {
+                from: avgPerColumns[id],
+                to: maxPerColumns[id] + 1,
+                fromBgColor: '#AED6F1',
+                toBgColor: '#ABEBC6'
+              }
+            ]
+          }
+        });
+      });
+
+      const formatters: any[] = [
+        {
+          columns: [0],
+          type: 'NumberFormat',
+          options: {
+            fractionDigits: 0
+          }
+        },
+        {
+          columns: [3, 5],
+          type: 'NumberFormat',
+          options: {
+            fractionDigits: 0,
+          }
+        },
+        {
+          columns: [4],
+          type: 'NumberFormat',
+          options: {
+            fractionDigits: 2,
+            pattern: '#.##%'
+          }
+        },
+        {
+          columns: [7, 8],
+          type: 'BarFormat'
+        }
+      ];
+
+      colorFormats.forEach(value => {
+        formatters.push(value);
+      });
+      const view = {columns: [0,  2, 3, 4, 5, 6, 7, 8]};
+
+      const options = {allowHtml: true};
+      return {
+        chartType: 'Table',
+        dataTable,
+        formatters,
+        options,
+        view
+      };
     }
+    return null;
   }
 
-  // drawGraph(field: string, lineCanvasDest: ElementRef){
-  //   if (this.codiciProvince) {
-  //     this.dataset = [];
-  //     let i = 0;
-  //     for (const codice of this.codiciProvince) {
-  //       this.drawLine(codice, i, field);
-  //       i++;
-  //     }
-  //     this.lineChart = new Chart(lineCanvasDest.nativeElement, {
-  //       type: 'line',
-  //       data: {
-  //         labels: this.chartLabels,
-  //         datasets: this.dataset
-  //       }
-  //     });
+  // switchContent(){
+  //   this.showContent = !this.showContent;
+  //   if (this.showContent){
+  //     this.openIcon = 'chevron-up-outline';
+  //     this.cardContentStyle = 'display: block';
+  //   } else {
+  //     this.openIcon = 'chevron-down-outline';
+  //     this.cardContentStyle = 'display: none';
   //   }
-  // }
-  //
-  // drawLine(codiceProvincia: number, index: number, field: string){
-  //   const chartData: number[] = [];
-  //   this.chartLabels = [];
-  //   let lineTitle = '';
-  //   this.province.filter((provincia) => {
-  //     return provincia.codice_provincia === codiceProvincia;
-  //   }).reverse().forEach((provincia) => {
-  //     chartData.push(provincia[field]);
-  //     this.chartLabels.push(this.datepipe.transform(provincia.data, 'dd/MM'));
-  //     lineTitle = provincia.denominazione_provincia;
-  //   });
-  //   this.dataset.push({
-  //     label: lineTitle,
-  //     fill: true,
-  //     borderColor: this.colorScale[index % this.colorScale.length],
-  //     backgroundColor: this.colorScale[index % this.colorScale.length] + '33',
-  //     lineTension: 0.2,
-  //     data: chartData,
-  //     spanGaps: true,
-  //   });
   // }
 
   percentage(value: number): string{

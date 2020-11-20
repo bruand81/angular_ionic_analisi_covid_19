@@ -10,6 +10,7 @@ import { DettagliRegionePage } from './dettagli-regione.page';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {SwipeModule} from '../swipe/swipe.module';
 import {GraficiComponentModule} from '../grafici/grafici-component.module';
+import {Ng2GoogleChartsModule} from 'ng2-google-charts';
 
 @NgModule({
   imports: [
@@ -17,9 +18,10 @@ import {GraficiComponentModule} from '../grafici/grafici-component.module';
     FormsModule,
     IonicModule,
     DettagliRegionePageRoutingModule,
-    NgxDatatableModule,
+    // NgxDatatableModule,
     SwipeModule,
-      GraficiComponentModule
+    GraficiComponentModule,
+    Ng2GoogleChartsModule
   ],
   declarations: [DettagliRegionePage]
 })

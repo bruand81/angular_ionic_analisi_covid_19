@@ -11,6 +11,7 @@ import {DatiEssenzialiComponentModule} from '../dati-essenziali/dati-essenziali-
 import {SwipeModule} from '../swipe/swipe.module';
 // import {Ng2GoogleChartsModule} from 'ng2-google-charts';
 import {GraficiComponentModule} from '../grafici/grafici-component.module';
+import {Ng2GoogleChartsModule} from 'ng2-google-charts';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import {GraficiComponentModule} from '../grafici/grafici-component.module';
     NgxDatatableModule,
     SwipeModule,
     GraficiComponentModule,
+      Ng2GoogleChartsModule
   ],
     declarations: [RegioniPage],
 })

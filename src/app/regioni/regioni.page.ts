@@ -4,11 +4,13 @@ import {Regioni} from '../models/regioni';
 import {Riepilogoregioni} from '../models/riepilogoregioni';
 import {BehaviorSubject} from 'rxjs';
 // import * as d3 from 'd3';
-import {DatePipe} from '@angular/common';
+import {DatePipe, PercentPipe} from '@angular/common';
 // import {ChartData} from '../models/chart-data';
 import {LoadingController, Platform} from '@ionic/angular';
 import {PathNavigatorSupportService} from '../service/path-navigator-support.service';
 import {Router} from '@angular/router';
+import {GoogleChartInterface} from 'ng2-google-charts';
+import {ColorFormatInterface, FormatterInterface} from 'ng2-google-charts/lib/google-charts-datatable';
 // import {GoogleChartInterface} from 'ng2-google-charts';
 
 @Component({
@@ -26,7 +28,7 @@ export class RegioniPage implements OnInit{
   riepilogoRegioni = new BehaviorSubject<Riepilogoregioni[]>(null);
   public showContent = false;
   public openIcon = 'chevron-down-outline';
-  public cardContentStyle = 'display: none';
+  // public cardContentStyle = 'display: none';
   // chartData: ChartData[] = [];
   dataAggiornamento = '-';
   loading: HTMLIonLoadingElement;
@@ -43,13 +45,14 @@ export class RegioniPage implements OnInit{
     cfr : 'cfr'
   };
   viewId = 1;
-  // graphWidth = 400;
   graphHeight = 400;
+  tableChart: GoogleChartInterface;
 
   constructor(
       public api: ApiService,
       private router: Router,
       public datepipe: DatePipe,
+      public percent: PercentPipe,
       public loadingController: LoadingController,
       public pathNavigatorSupport: PathNavigatorSupportService,
       public platform: Platform
@@ -87,18 +90,18 @@ export class RegioniPage implements OnInit{
     return null;
 }
 
-  onSort(event) {
-    console.log('Sort Event');
-    const field = this.tableFields[event.sorts[0].prop];
-    const dir = event.sorts[0].dir;
-    console.log(event.sorts[0].prop);
-    console.log(field);
-    let sortedList = this.regioni.sort((a, b) => (a[field] > b[field]) ? 1 : -1);
-    if (dir === 'desc') {
-      sortedList = sortedList.reverse();
-    }
-    this.regioni = sortedList;
-  }
+  // onSort(event) {
+  //   console.log('Sort Event');
+  //   const field = this.tableFields[event.sorts[0].prop];
+  //   const dir = event.sorts[0].dir;
+  //   console.log(event.sorts[0].prop);
+  //   console.log(field);
+  //   let sortedList = this.regioni.sort((a, b) => (a[field] > b[field]) ? 1 : -1);
+  //   if (dir === 'desc') {
+  //     sortedList = sortedList.reverse();
+  //   }
+  //   this.regioni = sortedList;
+  // }
 
   getLatestRegioni() {
     this.api.getLatestRegioni().subscribe((resp: any) => {
@@ -106,6 +109,7 @@ export class RegioniPage implements OnInit{
       this.nextPage = resp.next;
       this.previousPage = resp.previous;
       this.regioni = resp.results;
+      this.tableChart = this.drawTable();
     });
   }
 
@@ -127,132 +131,187 @@ export class RegioniPage implements OnInit{
     return this.percentage(value) + ' (' + numerator + '/' + denominator + ')';
   }
 
-  switchContent(){
-    this.showContent = !this.showContent;
-    if (this.showContent){
-      this.openIcon = 'chevron-up-outline';
-      this.cardContentStyle = 'display: block';
-    } else {
-      this.openIcon = 'chevron-down-outline';
-      this.cardContentStyle = 'display: none';
+  drawTable(): GoogleChartInterface {
+    if (this.regioni) {
+      let denum = 0;
+
+      const dataTable: any[] = [];
+      const headerRow = [
+        'ID',
+        'Regione',
+        'Percentuale Positivi/Tamponi',
+        'Percentuale Positivi/Casi testati',
+        'Decessi',
+        'Terapia Intensiva',
+        'Ricoverati con sintomi',
+        'Guariti',
+        'Incidenza a 7 giorni / 100.000 ab',
+        'CFR',
+        'percentuale_positivi_tamponi_giornaliera',
+        'percentuale_positivi_casi_giornaliera',
+        'nuovi_positivi',
+        'variazione_tamponi',
+        'variazione_casi_testati'
+      ];
+      dataTable.push(headerRow);
+
+      const maxPerColumns: number[] = new Array(headerRow.length);
+      const minPerColumns: number[] = new Array(headerRow.length);
+      const avgPerColumns: number[] = new Array(headerRow.length);
+      maxPerColumns.fill(0);
+      minPerColumns.fill(0);
+      avgPerColumns.fill(0);
+
+      this.regioni.forEach(value => {
+        const row = [
+          value.codice_regione,
+          value.denominazione_regione,
+          value.percentuale_positivi_tamponi_giornaliera,
+          value.percentuale_positivi_casi_giornaliera,
+          value.variazione_deceduti,
+          value.variazione_terapia_intensiva,
+          value.variazione_ricoverati_con_sintomi,
+          value.variazione_dimessi_guariti,
+          value.incidenza_7d,
+          value.cfr,
+          this.percent.transform(value.percentuale_positivi_tamponi_giornaliera, '1.0-2'),
+          this.percent.transform(value.percentuale_positivi_casi_giornaliera, '1.0-2'),
+          value.nuovi_positivi,
+          value.variazione_tamponi,
+          value.variazione_casi_testati
+        ];
+        const ids = [2, 3, 4, 5, 6, 7, 8, 9];
+        ids.forEach(id => {
+          if (minPerColumns[id] > row[id]){
+            minPerColumns[id] = (row[id] as number);
+          }
+          if (maxPerColumns[id] < row[id]){
+            maxPerColumns[id] = (row[id] as number);
+          }
+          avgPerColumns[id] += (row[id] as number);
+          denum += 1;
+        });
+        dataTable.push(row);
+      });
+      // console.log(dataTable);
+
+      avgPerColumns.forEach((value, idx) => {
+        if (value > 0) {
+          avgPerColumns[idx] = value / denum;
+        }
+      });
+      const colorFormatColumnsGreenToRedCol = [2, 3, 4, 5, 6, 8];
+      const colorFormatColumnsRedToGreenCol = [7, 9];
+      const colorFormats = [];
+
+      colorFormatColumnsGreenToRedCol.forEach(id => {
+        colorFormats.push({
+          columns: [id],
+          type: 'ColorFormat',
+          options: {
+            ranges: [{
+              from: minPerColumns[id] - 1,
+              to: avgPerColumns[id],
+              fromBgColor: '#ABEBC6',
+              toBgColor: '#AED6F1'
+            },
+              {
+                from: avgPerColumns[id],
+                to: maxPerColumns[id] + 1,
+                fromBgColor: '#AED6F1',
+                toBgColor: '#F5B7B1'
+              }
+            ]
+          }
+        });
+      });
+
+      colorFormatColumnsRedToGreenCol.forEach(id => {
+        colorFormats.push({
+          columns: [id],
+          type: 'ColorFormat',
+          options: {
+            ranges: [{
+              from: minPerColumns[id] - 1,
+              to: avgPerColumns[id] ,
+              fromBgColor: '#F5B7B1',
+              toBgColor: '#AED6F1'
+            },
+              {
+                from: avgPerColumns[id],
+                to: maxPerColumns[id] + 1,
+                fromBgColor: '#AED6F1',
+                toBgColor: '#ABEBC6'
+              }
+            ]
+          }
+        });
+      });
+
+      const formatters: any[] = [
+        {
+          columns: [0],
+          type: 'NumberFormat',
+          options: {
+            fractionDigits: 0
+          }
+        },
+        {
+          columns: [4, 5, 6, 7, 8],
+          type: 'NumberFormat',
+          options: {
+            fractionDigits: 0,
+          }
+        },
+        {
+          columns: [9],
+          type: 'NumberFormat',
+          options: {
+            fractionDigits: 2,
+            pattern: '#.##%'
+          }
+        },
+        {
+          columns: [8, 9],
+          type: 'BarFormat'
+        },
+        {
+          columns: [10, 12, 13],
+          type: 'PatternFormat',
+          options: {
+            pattern: '{0} ({1} su {2})',
+            dstColumnIndex: 2,
+          }
+        },
+        {
+          columns: [11, 12, 14],
+          type: 'PatternFormat',
+          options: {
+            pattern: '{0} ({1} su {2})',
+            dstColumnIndex: 3,
+          }
+        }
+      ];
+
+      colorFormats.forEach(value => {
+        formatters.push(value);
+      });
+      const view = {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]};
+
+      const options = {allowHtml: true};
+      return {
+        chartType: 'Table',
+        dataTable,
+        formatters,
+        options,
+        view
+      };
     }
+    return null;
   }
 
   initOrRefresh(){
     this.presentLoading();
-    // this.loadGroupAreaChart();
-    // this.riepilogoRegioni.subscribe((data) => {
-    //   if (data) {
-    //     if (this.loading){
-    //       this.loading.dismiss().then(r => {});
-    //     }
-    //     this.dataAggiornamento = this.datepipe.transform(data[data.length - 1].data, 'fullDate');
-    //     this.chartData = [];
-    //     this.chartData.push({
-    //       title: 'Grafico di riepilogo',
-    //       data,
-    //       chartLines: [
-    //         {
-    //           field: 'nuovi_positivi',
-    //           title: 'Nuovi positivi'
-    //         },
-    //         {
-    //           field: 'nuovi_positivi_7dma',
-    //           title: 'Nuovi positivi (7DMA)'
-    //         },
-    //         {
-    //           field: 'nuovi_positivi_3dma',
-    //           title: 'Nuovi positivi (3DMA)'
-    //         }
-    //       ],
-    //       colorScheme: d3.schemePaired,
-    //       type: 'numeric'
-    //     });
-    //
-    //     this.chartData.push({
-    //       title: 'Grafico carichi ospedalieri',
-    //       data,
-    //       chartLines: [
-    //         {
-    //           field: 'variazione_terapia_intensiva',
-    //           title: 'Terapie intensive'
-    //         },
-    //         {
-    //           field: 'variazione_ricoverati_con_sintomi',
-    //           title: 'Ricoverati con sintomi'
-    //         },
-    //         {
-    //           field: 'variazione_dimessi_guariti',
-    //           title: 'Guariti'
-    //         },
-    //         {
-    //           field: 'variazione_deceduti',
-    //           title: 'Decessi'
-    //         }
-    //       ],
-    //       colorScheme: d3.schemeOrRd[4],
-    //       type: 'numeric'
-    //     });
-    //
-    //     this.chartData.push({
-    //       title: 'Grafico percentuali',
-    //       data,
-    //       chartLines: [
-    //         {
-    //           field: 'percentuale_positivi_casi_giornaliera',
-    //           title: 'Postivi / casi testati'
-    //         },
-    //         {
-    //           field: 'percentuale_positivi_casi_7dma',
-    //           title: 'Postivi / casi testati a 7 giorni'
-    //         },
-    //         // {
-    //         //   field: 'percentuale_variazione_terapia_intensiva',
-    //         //   title: 'Terapia intensiva'
-    //         // },
-    //         {
-    //           field: 'percentuale_variazione_deceduti',
-    //           title: 'Decessi'
-    //         },
-    //         {
-    //           field: 'cfr',
-    //           title: 'Case Fatality Rate'
-    //         }
-    //       ],
-    //       colorScheme: d3.schemeOrRd[4],
-    //       type: 'percentage'
-    //     });
-    //
-    //     this.chartData.push({
-    //       title: 'Grafico A 7 giorni',
-    //       data,
-    //       chartLines: [
-    //         {
-    //           field: 'incidenza_7d',
-    //           title: 'Incidenza'
-    //         },
-    //         {
-    //           field: 'variazione_terapia_intensiva_7dma',
-    //           title: 'Terapia intensiva'
-    //         },
-    //         {
-    //           field: 'variazione_deceduti_7dma',
-    //           title: 'Decessi'
-    //         },
-    //         {
-    //           field: 'nuovi_positivi_7dma',
-    //           title: 'Nuovi positivi'
-    //         },
-    //         {
-    //           field: 'variazione_ricoverati_con_sintomi_7dma',
-    //           title: 'Ricoveri'
-    //         }
-    //       ],
-    //       colorScheme: d3.schemeOrRd[4],
-    //       type: 'numeric'
-    //     });
-    //   }
-    // });
     this.getLatestRegioni();
     this.getRiepilogoRegioni(0);
   }
