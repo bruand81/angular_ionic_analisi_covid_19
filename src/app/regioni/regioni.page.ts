@@ -289,7 +289,7 @@ export class RegioniPage implements OnInit{
           columns: [10, 12, 13],
           type: 'PatternFormat',
           options: {
-            pattern: '{0} ({1} su {2})',
+            pattern: '<strong>{0}</strong>  ({1} su {2})',
             dstColumnIndex: 2,
           }
         },
@@ -297,7 +297,7 @@ export class RegioniPage implements OnInit{
           columns: [11, 12, 14],
           type: 'PatternFormat',
           options: {
-            pattern: '{0} ({1} su {2})',
+            pattern: '<strong>{0}</strong> ({1} su {2})',
             dstColumnIndex: 3,
           }
         },
