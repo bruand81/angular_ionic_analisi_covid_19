@@ -91,7 +91,7 @@ export class RegioniPage implements OnInit{
 
   getRiepilogoRegioni(value: number) {
     this.api.getRiepilogoRegioni(value).subscribe((resp: any) => {
-      this.riepilogoRegioni.next(resp);
+      this.riepilogoRegioni.next(resp.results);
     });
   }
 

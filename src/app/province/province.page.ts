@@ -37,7 +37,7 @@ export class ProvincePage implements OnInit{
 
   getListRegioni(){
     this.api.getListRegioni().subscribe((data) => {
-      this.listRegioni = data;
+      this.listRegioni = data.results;
     });
   }
 
@@ -49,7 +49,7 @@ export class ProvincePage implements OnInit{
 
   getRiepilogoRegioni(value: number) {
     this.api.getRiepilogoRegioni(value).subscribe((resp: any) => {
-      this.riepilogoRegioni.next(resp);
+      this.riepilogoRegioni.next(resp.results);
     });
   }
 

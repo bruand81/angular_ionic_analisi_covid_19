@@ -53,7 +53,7 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
 
   getListRegioni(){
     this.api.getListRegioni().subscribe((data) => {
-      this.listRegioni = data;
+      this.listRegioni = data.results;
     });
   }
 
