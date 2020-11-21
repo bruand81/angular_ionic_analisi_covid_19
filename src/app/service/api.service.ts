@@ -42,7 +42,8 @@ export class ApiService {
         'variazione_terapia_intensiva,variazione_tamponi,incidenza_7d,nuovi_positivi_7dma,nuovi_positivi_3dma,incidenza,' +
         'percentuale_positivi_casi_giornaliera,percentuale_variazione_terapia_intensiva,percentuale_variazione_deceduti,' +
         'percentuale_positivi_casi_7dma,cfr,variazione_terapia_intensiva_7dma,variazione_deceduti_7dma,' +
-        'variazione_ricoverati_con_sintomi_7dma').pipe(catchError(this.handleError));
+        'variazione_ricoverati_con_sintomi_7dma,nuovi_positivi_7d_incr,terapia_intensiva_7d_incr,deceduti_7d_incr,' +
+        'dimessi_guariti_7d_incr,ricoverati_con_sintomi_7d_incr').pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse): any {

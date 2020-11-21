@@ -20,4 +20,9 @@ export interface Riepilogoregioni {
     variazione_terapia_intensiva_7dma: number;
     variazione_deceduti_7dma: number;
     variazione_ricoverati_con_sintomi_7dma: number;
+    nuovi_positivi_7d_incr: number;
+    terapia_intensiva_7d_incr: number;
+    deceduti_7d_incr: number;
+    dimessi_guariti_7d_incr: number;
+    ricoverati_con_sintomi_7d_incr: number;
 }

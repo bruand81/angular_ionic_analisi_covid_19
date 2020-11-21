@@ -103,6 +103,7 @@ export class GraficiComponent implements OnInit, AfterViewInit{
     }
     this.data.subscribe((dt) => {
       if (dt) {
+        dt = dt.reverse();
         // console.log(dataset);
         // console.log(this.graphHeight);
         const formatters = [{
@@ -235,6 +236,47 @@ export class GraficiComponent implements OnInit, AfterViewInit{
           }
         });
 
+        // Grafico 7g su 7g
+        dataTable = [];
+        dataTable.push([
+          ['domain', 'Data'],
+          'Nuovi positivi',
+          {type: 'number', role: 'annotation'},
+          'Terapia intensiva',
+          {type: 'number', role: 'annotation'},
+          'Decessi',
+          {type: 'number', role: 'annotation'},
+          'Ricoveri',
+          {type: 'number', role: 'annotation'},
+          'Guariti',
+          {type: 'number', role: 'annotation'},]);
+        dt.forEach((value) => {
+          const date = this.datepipe.transform(value.data, 'dd MMM');
+          dataTable.push([date,
+            value.nuovi_positivi_7d_incr,
+            value.nuovi_positivi_7d_incr,
+            value.terapia_intensiva_7d_incr,
+            value.terapia_intensiva_7d_incr,
+            value.deceduti_7d_incr,
+            value.deceduti_7d_incr,
+            value.ricoverati_con_sintomi_7d_incr,
+            value.ricoverati_con_sintomi_7d_incr,
+            value.dimessi_guariti_7d_incr,
+            value.dimessi_guariti_7d_incr]);
+        });
+        view = {columns: this.selectViewAnnotationInColumns(dataTable[0], this.charts.length)};
+        this.charts.push({
+          title: '7 giorni su 7 giorni precedenti',
+          chart: {
+            chartType: 'AreaChart',
+            dataTable,
+            formatters,
+            options,
+            view
+          }
+        });
+
+        // Grafico Percentuali
         dataTable = [];
         dataTable.push([
           ['domain', 'Data'],

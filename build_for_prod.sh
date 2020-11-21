@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 CUR_DIR=$PWD
 
 echo "Changing current dir to $(dirname "$0")"

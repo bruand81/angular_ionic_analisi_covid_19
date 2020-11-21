@@ -66,4 +66,14 @@ export interface Regioni {
     percentuale_positivi_casi: number;
     percentuale_positivi_casi_giornaliera: number;
     cfr: number;
+    nuovi_positivi_7dsum: number;
+    terapia_intensiva_7dsum: number;
+    deceduti_7dsum: number;
+    dimessi_guariti_7dsum: number;
+    ricoverati_con_sintomi_7dsum: number;
+    nuovi_positivi_7d_incr: number;
+    terapia_intensiva_7d_incr: number;
+    deceduti_7d_incr: number;
+    dimessi_guariti_7d_incr: number;
+    ricoverati_con_sintomi_7d_incr: number;
 }

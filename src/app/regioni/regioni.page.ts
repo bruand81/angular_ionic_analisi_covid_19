@@ -101,21 +101,26 @@ export class RegioniPage implements OnInit{
 
       const dataTable: any[] = [];
       const headerRow = [
-        'ID',
-        'Regione',
-        'Percentuale Positivi/Tamponi',
-        'Percentuale Positivi/Casi testati',
-        'Decessi',
-        'Terapia Intensiva',
-        'Ricoverati con sintomi',
-        'Guariti',
-        'Incidenza a 7 giorni / 100.000 ab',
-        'CFR',
-        'percentuale_positivi_tamponi_giornaliera',
-        'percentuale_positivi_casi_giornaliera',
-        'nuovi_positivi',
-        'variazione_tamponi',
-        'variazione_casi_testati'
+        'ID', // 0
+        'Regione', // 1
+        'Percentuale Positivi/Tamponi', // 2
+        'Percentuale Positivi/Casi testati', // 3
+        'Decessi', // 4
+        'Terapia Intensiva', // 5
+        'Ricoverati con sintomi', // 6
+        'Guariti', // 7
+        'Incidenza a 7 giorni / 100.000 ab', // 8
+        'CFR', // 9
+        'percentuale_positivi_tamponi_giornaliera', // 10
+        'percentuale_positivi_casi_giornaliera', // 11
+        'nuovi_positivi', // 12
+        'variazione_tamponi', // 13
+        'variazione_casi_testati', // 14
+        'Nuovi positivi (7g su 7g)', // 15
+        'Terapia Intensiva (7g su 7g)', // 16
+        'Decessi (7g su 7g)', // 17
+        'Guariti (7g su 7g)', // 18
+        'Ricoverati con sintomi (7g su 7g)', // 19
       ];
       dataTable.push(headerRow);
 
@@ -142,9 +147,15 @@ export class RegioniPage implements OnInit{
           this.percent.transform(value.percentuale_positivi_casi_giornaliera, '1.0-2'),
           value.nuovi_positivi,
           value.variazione_tamponi,
-          value.variazione_casi_testati
+          value.variazione_casi_testati,
+          value.nuovi_positivi_7d_incr,
+          value.terapia_intensiva_7d_incr,
+          value.deceduti_7d_incr,
+          value.dimessi_guariti_7d_incr,
+          value.ricoverati_con_sintomi_7d_incr,
         ];
-        const ids = [2, 3, 4, 5, 6, 7, 8, 9];
+        const ids = [2, 3, 4, 5, 6, 7, 8, 9, 15, 16, 17, 18, 19];
+        const zerAvg = [15, 16, 17, 18, 19];
         ids.forEach(id => {
           if (minPerColumns[id] > row[id]){
             minPerColumns[id] = (row[id] as number);
@@ -152,7 +163,9 @@ export class RegioniPage implements OnInit{
           if (maxPerColumns[id] < row[id]){
             maxPerColumns[id] = (row[id] as number);
           }
-          avgPerColumns[id] += (row[id] as number);
+          if (!(id in zerAvg)) {
+            avgPerColumns[id] += (row[id] as number);
+          }
           denum += 1;
         });
         dataTable.push(row);
@@ -164,7 +177,7 @@ export class RegioniPage implements OnInit{
         }
       });
       const colorFormatColumnsGreenToRedCol = [2, 3, 4, 5, 6, 8];
-      const colorFormatColumnsRedToGreenCol = [7, 9];
+      const colorFormatColumnsRedToGreenCol = [7];
       const colorFormats = [];
 
       colorFormatColumnsGreenToRedCol.forEach(id => {
@@ -212,15 +225,15 @@ export class RegioniPage implements OnInit{
       });
 
       const formatters: any[] = [
+        // {
+        //   columns: [0],
+        //   type: 'NumberFormat',
+        //   options: {
+        //     fractionDigits: 0
+        //   }
+        // },
         {
-          columns: [0],
-          type: 'NumberFormat',
-          options: {
-            fractionDigits: 0
-          }
-        },
-        {
-          columns: [4, 5, 6, 7, 8],
+          columns: [0, 4, 5, 6, 7, 8, 15, 16, 17, 18, 19],
           type: 'NumberFormat',
           options: {
             fractionDigits: 0,
@@ -235,8 +248,42 @@ export class RegioniPage implements OnInit{
           }
         },
         {
-          columns: [8, 9],
-          type: 'BarFormat'
+          columns: [ 8 ],
+          type: 'BarFormat',
+          options: {
+            colorNegative: 'green',
+            colorPositive: 'red',
+            drawZeroLine: true,
+            base: 100
+          }
+        },
+        {
+          columns: [ 9 ],
+          type: 'BarFormat',
+          options: {
+            colorNegative: 'green',
+            colorPositive: 'red',
+            drawZeroLine: true,
+            base: 0.03
+          }
+        },
+        {
+          columns: [18],
+          type: 'BarFormat',
+          options: {
+            colorNegative: 'red',
+            colorPositive: 'green',
+            drawZeroLine: true
+          }
+        },
+        {
+          columns: [ 15, 16, 17, 19],
+          type: 'BarFormat',
+          options: {
+            colorNegative: 'green',
+            colorPositive: 'red',
+            drawZeroLine: true
+          }
         },
         {
           columns: [10, 12, 13],
@@ -253,13 +300,13 @@ export class RegioniPage implements OnInit{
             pattern: '{0} ({1} su {2})',
             dstColumnIndex: 3,
           }
-        }
+        },
       ];
 
       colorFormats.forEach(value => {
         formatters.push(value);
       });
-      const view = {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]};
+      const view = {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 15, 16, 17, 18, 19]};
 
       const options = {allowHtml: true};
       return {

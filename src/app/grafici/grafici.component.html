@@ -14,16 +14,20 @@
                     </ion-card-content>
                 </ion-card>
             </ion-col>
-            <ion-col *ngIf="numCol==2 && charts.length > (i+1)">
+<!--            <ion-col *ngIf="numCol==2 && charts.length > (i+1)">-->
+            <ion-col *ngIf="numCol==2">
                 <ion-card>
-                    <ion-card-header>
-                        <ion-card-title>{{ charts[i+1].title }}</ion-card-title>
+                    <ion-card-header  *ngIf="charts.length > (i+1)">
+                        <ion-card-title >{{ charts[i+1].title }}</ion-card-title>
                     </ion-card-header>
-                    <ion-card-content>
+                    <ion-card-content *ngIf="charts.length > (i+1)" >
                         <pinch-zoom backgroundColor="rgba(0,0,0,0)" [auto-zoom-out]="false" limit-zoom="10" overflow="visible">
                             <google-chart [data]="charts[i+1].chart" class="chart"></google-chart>
                         </pinch-zoom>
                         <ion-button expand="block" color="primary" (click)="switchShowAnnotationFor(i+1)">Mostra/Nascondi valori</ion-button>
+                    </ion-card-content>
+                    <ion-card-content *ngIf="charts.length <= (i+1)" >
+
                     </ion-card-content>
                 </ion-card>
             </ion-col>
