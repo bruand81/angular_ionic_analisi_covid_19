@@ -97,6 +97,8 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
         'Variazione casi a 7 giorni',
         'Incidenza / 100.000 ab',
         'Incidenza a 7 giorni / 100.000 ab',
+        'Casi negli ultimi 7 giorni',
+        'Variazione casi 7 gg su 7 gg',
       ];
       dataTable.push(headerRow);
 
@@ -117,9 +119,11 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
           value.variazione_totale_casi_3dma, // 5
           value.variazione_totale_casi_7dma, // 6
           value.incidenza, // 7
-          value.incidenza_7d // 8
+          value.incidenza_7d, // 8
+          value.nuovi_positivi_7dsum, // 9
+          value.nuovi_positivi_7d_incr // 10
         ];
-        const ids = [3, 4, 5, 6, 7, 8];
+        const ids = [3, 4, 5, 6, 7, 8, 9, 10];
         ids.forEach(id => {
           if (minPerColumns[id] > row[id]){
             minPerColumns[id] = (row[id] as number);
@@ -139,7 +143,7 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
         }
       });
 
-      const colorFormatColumnsGreenToRedCol = [3, 4, 5, 6];
+      const colorFormatColumnsGreenToRedCol = [3, 4, 5, 6, 9, 10];
       const colorFormatColumnsRedToGreenCol = [7, 8];
       const colorFormats = [];
 
@@ -219,7 +223,7 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
       colorFormats.forEach(value => {
         formatters.push(value);
       });
-      const view = {columns: [0,  2, 3, 4, 5, 6, 7, 8]};
+      const view = {columns: [0,  2, 3, 4, 5, 6, 7, 8, 9, 10]};
 
       const options = {allowHtml: true};
       return {

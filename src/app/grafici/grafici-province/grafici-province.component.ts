@@ -103,7 +103,7 @@ export class GraficiProvinceComponent implements OnInit, AfterViewInit{
       this.charts = [];
       this.charts.push(this.buildChart('variazione_totale_casi', 'Casi province'));
       this.charts.push(this.buildChart('incidenza_7d', 'Incidenza province'));
-      this.charts.push(this.buildChart('variazione_totale_casi_3dma', 'Casi province a 3 giorni'));
+      this.charts.push(this.buildChart('nuovi_positivi_7d_incr', 'Incremento casi 7 giorni su 7 giorni'));
       this.charts.push(this.buildChart('variazione_totale_casi_7dma', 'Casi province a 7 giorni'));
       // console.log(this.data);
     }
