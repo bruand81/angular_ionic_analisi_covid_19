@@ -147,7 +147,7 @@ export class GraficiComponent implements OnInit, AfterViewInit{
           {type: 'number', role: 'annotation'},
           'Nuovi positivi (3DMA)',
           {type: 'number', role: 'annotation'},
-          'Nuovi positivi (3DMA)',
+          'Nuovi positivi (7DMA)',
           {type: 'number', role: 'annotation'}]);
         dt.forEach((value) => {
           const date = this.datepipe.transform(value.data, 'dd MMM');
