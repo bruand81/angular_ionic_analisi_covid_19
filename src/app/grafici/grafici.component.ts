@@ -35,6 +35,10 @@ export class GraficiComponent implements OnInit, AfterViewInit{
     });
   }
 
+  chartSelectEvent(event) {
+    console.log(event);
+  }
+
   resize(width: number) {
     if (width > 500){
       this.numCol = 2;
@@ -115,16 +119,31 @@ export class GraficiComponent implements OnInit, AfterViewInit{
             }
           ];
         const options = {
+          selectionMode: 'multiple',
+          aggregationTarget: 'series',
           legend: {
             position: 'top',
             alignment: 'center'
           },
           pointsVisible: true,
           tooltip: {
-            trigger: 'focus'
+            trigger: 'focus',
+            showColorCode: true
+          },
+          animation: {
+            duration: 10000,
+            start: true,
+            easing: 'inAndOut'
           },
           crosshair: {
-            trigger: 'selection'
+            trigger: 'selection',
+            opacity: 0.5
+          },
+          explorer: {
+            actions:  ['dragToZoom', 'rightClickToReset'],
+            maxZoomIn: 0.1,
+            maxZoomOut: 8,
+            zoomDelta: 1
           },
           height: this.height,
           // width: '100%',

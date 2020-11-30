@@ -119,6 +119,13 @@ export class GraficiProvinceComponent implements OnInit, AfterViewInit{
     }
     ];
     const options = {
+      selectionMode: 'multiple',
+      aggregationTarget: 'series',
+      animation: {
+        duration: 10000,
+        start: true,
+        easing: 'inAndOut'
+      },
       legend: {
         position: 'top',
         alignment: 'center'
@@ -129,6 +136,12 @@ export class GraficiProvinceComponent implements OnInit, AfterViewInit{
       },
       crosshair: {
         trigger: 'selection'
+      },
+      explorer: {
+        actions:  ['dragToZoom', 'rightClickToReset'],
+        maxZoomIn: 0.1,
+        maxZoomOut: 8,
+        zoomDelta: 1
       },
       height: this.height,
       // width: '100%',
@@ -185,6 +198,10 @@ export class GraficiProvinceComponent implements OnInit, AfterViewInit{
       }
     };
     return chart;
+  }
+
+  chartSelectEvent(event) {
+    console.log(event);
   }
 
   getUniqueData(): Date[]{
