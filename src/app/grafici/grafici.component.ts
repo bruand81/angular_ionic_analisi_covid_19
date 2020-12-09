@@ -273,7 +273,7 @@ export class GraficiComponent implements OnInit, AfterViewInit{
           'Ricoveri',
           {type: 'number', role: 'annotation'},
           'Guariti',
-          {type: 'number', role: 'annotation'},]);
+          {type: 'number', role: 'annotation'}, ]);
         dt.forEach((value) => {
           const date = this.datepipe.transform(value.data, 'dd MMM');
           dataTable.push([date,
