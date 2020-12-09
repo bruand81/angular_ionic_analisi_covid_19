@@ -26,4 +26,5 @@ export interface Riepilogoregioni {
     dimessi_guariti_7d_incr: number;
     ricoverati_con_sintomi_7d_incr: number;
     ingressi_terapia_intensiva: number;
+    percentuale_variazione_ingressi_terapia_intensiva: number;
 }

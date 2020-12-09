@@ -315,7 +315,11 @@ export class GraficiComponent implements OnInit, AfterViewInit{
           {type: 'string', role: 'tooltip'},
           'Case Fatality Rate',
           {type: 'string', role: 'annotation'},
-          {type: 'string', role: 'tooltip'}, ]);
+          {type: 'string', role: 'tooltip'},
+          // 'Ingressi T.I.',
+          // {type: 'string', role: 'annotation'},
+          // {type: 'string', role: 'tooltip'},
+        ]);
 
         const option2 = Object.create(options);
         option2.vAxis = {
@@ -336,7 +340,10 @@ export class GraficiComponent implements OnInit, AfterViewInit{
             this.percentageForTooltip(date, value.percentuale_variazione_deceduti, 'Decessi'),
             value.cfr,
             this.percentage.transform(value.cfr, '1.0-2'),
-            this.percentageForTooltip(date, value.cfr, 'Case Fatality Rate')
+            this.percentageForTooltip(date, value.cfr, 'Case Fatality Rate'),
+            // value.percentuale_variazione_ingressi_terapia_intensiva,
+            // this.percentage.transform(value.percentuale_variazione_ingressi_terapia_intensiva, '1.0-2'),
+            // this.percentageForTooltip(date, value.percentuale_variazione_ingressi_terapia_intensiva, 'Ingressi T.I.')
           ]);
         });
         view = {columns: this.selectViewAnnotationInColumns(dataTable[0], this.charts.length)};
