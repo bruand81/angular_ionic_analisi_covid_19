@@ -43,7 +43,7 @@ export class ApiService {
         'percentuale_positivi_casi_giornaliera,percentuale_variazione_terapia_intensiva,percentuale_variazione_deceduti,' +
         'percentuale_positivi_casi_7dma,cfr,variazione_terapia_intensiva_7dma,variazione_deceduti_7dma,' +
         'variazione_ricoverati_con_sintomi_7dma,nuovi_positivi_7d_incr,terapia_intensiva_7d_incr,deceduti_7d_incr,' +
-        'dimessi_guariti_7d_incr,ricoverati_con_sintomi_7d_incr').pipe(catchError(this.handleError));
+        'dimessi_guariti_7d_incr,ricoverati_con_sintomi_7d_incr,ingressi_terapia_intensiva').pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse): any {

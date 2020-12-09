@@ -229,15 +229,20 @@ export class GraficiComponent implements OnInit, AfterViewInit{
           ['domain', 'Data'],
           'Terapia intensiva',
           {type: 'number', role: 'annotation'},
+          'Ingressi T.I.',
+          {type: 'number', role: 'annotation'},
           'Ricoveri',
           {type: 'number', role: 'annotation'},
           'Decessi',
           {type: 'number', role: 'annotation'}, ]);
         dt.forEach((value) => {
           const date = this.datepipe.transform(value.data, 'dd, MMM');
+          console.log(value.ingressi_terapia_intensiva);
           dataTable.push([date,
             value.variazione_terapia_intensiva,
             value.variazione_terapia_intensiva,
+            value.ingressi_terapia_intensiva,
+            value.ingressi_terapia_intensiva,
             value.variazione_ricoverati_con_sintomi,
             value.variazione_ricoverati_con_sintomi,
             value.variazione_deceduti,

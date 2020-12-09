@@ -121,6 +121,7 @@ export class RegioniPage implements OnInit{
         'Decessi (7g su 7g)', // 17
         'Guariti (7g su 7g)', // 18
         'Ricoverati con sintomi (7g su 7g)', // 19
+        'Ingressi T.I.', // 20
       ];
       dataTable.push(headerRow);
 
@@ -153,8 +154,9 @@ export class RegioniPage implements OnInit{
           value.deceduti_7d_incr,
           value.dimessi_guariti_7d_incr,
           value.ricoverati_con_sintomi_7d_incr,
+          value.ingressi_terapia_intensiva,
         ];
-        const ids = [2, 3, 4, 5, 6, 7, 8, 9, 15, 16, 17, 18, 19];
+        const ids = [2, 3, 4, 5, 6, 7, 8, 9, 15, 16, 17, 18, 19, 20];
         const zerAvg = [15, 16, 17, 18, 19];
         ids.forEach(id => {
           if (minPerColumns[id] > row[id]){
@@ -176,7 +178,8 @@ export class RegioniPage implements OnInit{
           avgPerColumns[idx] = value / denum;
         }
       });
-      const colorFormatColumnsGreenToRedCol = [2, 3, 4, 5, 6, 8];
+      // console.log(dataTable);
+      const colorFormatColumnsGreenToRedCol = [2, 3, 4, 5, 6, 8, 20];
       const colorFormatColumnsRedToGreenCol = [7];
       const colorFormats = [];
 
@@ -233,7 +236,7 @@ export class RegioniPage implements OnInit{
         //   }
         // },
         {
-          columns: [0, 4, 5, 6, 7, 8, 15, 16, 17, 18, 19],
+          columns: [0, 4, 5, 6, 7, 8, 15, 16, 17, 18, 19, 20],
           type: 'NumberFormat',
           options: {
             fractionDigits: 0,
@@ -277,7 +280,7 @@ export class RegioniPage implements OnInit{
           }
         },
         {
-          columns: [ 15, 16, 17, 19],
+          columns: [ 15, 16, 17, 19, 20],
           type: 'BarFormat',
           options: {
             colorNegative: 'green',
@@ -306,7 +309,7 @@ export class RegioniPage implements OnInit{
       colorFormats.forEach(value => {
         formatters.push(value);
       });
-      const view = {columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 15, 16, 17, 18, 19]};
+      const view = {columns: [0, 1, 2, 3, 4, 5, 20, 6, 7, 8, 9, 15, 16, 17, 18, 19]};
 
       const options = {allowHtml: true};
       return {

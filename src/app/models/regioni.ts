@@ -76,4 +76,5 @@ export interface Regioni {
     deceduti_7d_incr: number;
     dimessi_guariti_7d_incr: number;
     ricoverati_con_sintomi_7d_incr: number;
+    ingressi_terapia_intensiva: number;
 }

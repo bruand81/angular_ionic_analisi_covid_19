@@ -30,6 +30,14 @@
       </ion-col>
       <ion-col>
         <ion-item>
+          <ion-label class="ion-text-wrap">Ingressi T.I.</ion-label>
+          <ion-badge slot="end" color="warning"> {{ data.ingressi_terapia_intensiva | number }} </ion-badge>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
           <ion-label class="ion-text-wrap">Ricoverati</ion-label>
           <ion-badge slot="end" color="warning"> {{ data.variazione_ricoverati_con_sintomi | number }} </ion-badge>
         </ion-item>
