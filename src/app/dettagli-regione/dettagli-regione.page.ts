@@ -19,6 +19,7 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
   selectedRegion = 15;
   province: Province[];
   latestProvince: Province[];
+  dataAggiornamento = '-';
   public showContent = false;
   public openIcon = 'chevron-down-outline';
   public cardContentStyle = 'display: none';
@@ -61,6 +62,7 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
     this.api.getProvinceInRegione(value).subscribe((data) => {
       this.province = data.results;
       const maxdate = data.results[0].data;
+      this.dataAggiornamento =  `Dati aggiornati al ${this.datepipe.transform(maxdate, 'longDate')}`;
       this.latestProvince = data.results.filter((provincia) => {
         return provincia.data === maxdate;
       });

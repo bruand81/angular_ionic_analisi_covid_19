@@ -13,6 +13,8 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-item><h3>{{ dataAggiornamento }}</h3></ion-item>
+
   <ion-item>
     <ion-select *ngIf="listRegioni" [(ngModel)]="selectedRegion" (ionChange)="selectedRegionFn()" [compareWith]="compareFn" placeholder="Seleziona una regione">
       <ion-select-option *ngFor="let regione of listRegioni" [value]="regione.codice_regione" > {{ regione.denominazione_regione }} </ion-select-option>
