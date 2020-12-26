@@ -11,7 +11,7 @@ echo "Start building app"
 ionic build --prod -- --base-href /www/
 
 echo "Copying builded app to application server forlder"
-cp -r www ../../public_html/
+cp -v -r www ../../public_html/
 
 echo "Changing current dir to $CUR_DIR"
 cd $CUR_DIR || exit
