@@ -21,7 +21,7 @@
 
   <ion-item><h3>{{ dataAggiornamento }}</h3></ion-item>
 
-  <app-dati-essenziali *ngIf="regioni" [data]="regioni[getIndexOfCountry(0)]"></app-dati-essenziali>
+  <app-dati-essenziali *ngIf="regioni" [data]="regioni[getIndexOfCountry(0)]" [isRegion]="false"></app-dati-essenziali>
   <ion-card *ngIf="!regioni">
     <ion-header>
       <ion-title>Dati non disponibili al momento</ion-title>

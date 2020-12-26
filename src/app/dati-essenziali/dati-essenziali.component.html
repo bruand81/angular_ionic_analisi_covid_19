@@ -5,25 +5,25 @@
       <ion-col>
         <ion-item>
           <ion-label class="ion-text-wrap">Positivi / Tamponi effettuati</ion-label>
-          <ion-badge slot="end" color="danger"> {{ data.percentuale_positivi_tamponi_giornaliera | percent:'1.0-2' }} ({{ data.nuovi_positivi | number }} su {{ data.variazione_tamponi | number}}) </ion-badge>
+          <ion-badge slot="end" [color]="getColorForField(data.percentuale_positivi_tamponi_giornaliera, 'percentuale_positivi_tamponi_giornaliera')" > {{ data.percentuale_positivi_tamponi_giornaliera | percent:'1.0-2' }} ({{ data.nuovi_positivi | number }} su {{ data.variazione_tamponi | number}}) </ion-badge>
         </ion-item>
       </ion-col>
       <ion-col>
         <ion-item>
           <ion-label class="ion-text-wrap">Positivi / Persone testate</ion-label>
-          <ion-badge slot="end" color="danger"> {{ data.percentuale_positivi_casi_giornaliera | percent:'1.0-2' }} ({{ data.nuovi_positivi | number }} su {{ data.variazione_casi_testati | number}}) </ion-badge>
+          <ion-badge slot="end" [color]="getColorForField(data.percentuale_positivi_casi_giornaliera, 'percentuale_positivi_casi_giornaliera')"> {{ data.percentuale_positivi_casi_giornaliera | percent:'1.0-2' }} ({{ data.nuovi_positivi | number }} su {{ data.variazione_casi_testati | number}}) </ion-badge>
         </ion-item>
       </ion-col>
       <ion-col>
         <ion-item>
           <ion-label class="ion-text-wrap">Totale casi</ion-label>
-          <ion-badge slot="end" color="danger"> {{ data.totale_casi | number }}  ({{ data.nuovi_positivi | number }}) </ion-badge>
+          <ion-badge slot="end" [color]="getColorForField(data.nuovi_positivi, 'nuovi_positivi')"> {{ data.totale_casi | number }}  ({{ data.nuovi_positivi | number }}) </ion-badge>
         </ion-item>
       </ion-col>
       <ion-col>
         <ion-item>
           <ion-label class="ion-text-wrap">Decessi</ion-label>
-          <ion-badge slot="end" color="danger"> {{ data.deceduti | number }} ({{ data.variazione_deceduti | number }}) </ion-badge>
+          <ion-badge slot="end" [color]="getColorForField(data.variazione_deceduti, 'variazione_deceduti')"> {{ data.deceduti | number }} ({{ data.variazione_deceduti | number }}) </ion-badge>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -31,13 +31,13 @@
       <ion-col>
         <ion-item>
           <ion-label class="ion-text-wrap">T.I.</ion-label>
-          <ion-badge slot="end" color="warning"> {{ data.terapia_intensiva | number }} ({{ data.variazione_terapia_intensiva | number }}) </ion-badge>
+          <ion-badge slot="end" [color]="getColorForField(data.variazione_terapia_intensiva, 'variazione_terapia_intensiva')"> {{ data.terapia_intensiva | number }} ({{ data.variazione_terapia_intensiva | number }}) </ion-badge>
         </ion-item>
       </ion-col>
       <ion-col>
         <ion-item>
           <ion-label class="ion-text-wrap">Ingressi T.I.</ion-label>
-          <ion-badge slot="end" color="warning"> {{ data.ingressi_terapia_intensiva | number }} </ion-badge>
+          <ion-badge slot="end" [color]="getColorForField(data.ingressi_terapia_intensiva, 'ingressi_terapia_intensiva')"> {{ data.ingressi_terapia_intensiva | number }} </ion-badge>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -45,13 +45,13 @@
       <ion-col>
         <ion-item>
           <ion-label class="ion-text-wrap">Ricoverati</ion-label>
-          <ion-badge slot="end" color="warning"> {{ data.ricoverati_con_sintomi | number }} ({{ data.variazione_ricoverati_con_sintomi | number }}) </ion-badge>
+          <ion-badge slot="end" [color]="getColorForField(data.variazione_ricoverati_con_sintomi, 'variazione_ricoverati_con_sintomi')"> {{ data.ricoverati_con_sintomi | number }} ({{ data.variazione_ricoverati_con_sintomi | number }}) </ion-badge>
         </ion-item>
       </ion-col>
       <ion-col>
         <ion-item>
           <ion-label class="ion-text-wrap">CFR</ion-label>
-          <ion-badge slot="end" color="warning"> {{ data.cfr | percent:'1.0-2' }} </ion-badge>
+          <ion-badge slot="end" [color]="getColorForField(data.cfr, 'cfr')"> {{ data.cfr | percent:'1.0-2' }} </ion-badge>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -59,13 +59,13 @@
       <ion-col>
         <ion-item>
           <ion-label class="ion-text-wrap">Incidenza a 7 giorni (positivi/100.000 abitanti)</ion-label>
-          <ion-badge slot="end" color="tertiary"> {{ data.incidenza_7d | number }} </ion-badge>
+          <ion-badge slot="end" [color]="getColorForField(data.incidenza_7d, 'incidenza_7d')"> {{ data.incidenza_7d | number }} </ion-badge>
         </ion-item>
       </ion-col>
       <ion-col>
         <ion-item>
           <ion-label class="ion-text-wrap">Guariti</ion-label>
-          <ion-badge slot="end" color="success"> {{ data.dimessi_guariti | number }} ({{ data.variazione_dimessi_guariti | number }}) </ion-badge>
+          <ion-badge slot="end" [color]="getColorForField(data.variazione_dimessi_guariti, 'variazione_dimessi_guariti')">{{ data.dimessi_guariti | number }} ({{ data.variazione_dimessi_guariti | number }}) </ion-badge>
         </ion-item>
       </ion-col>
     </ion-row>
