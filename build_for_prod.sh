@@ -9,5 +9,7 @@ cd "$(dirname "$0")" || exit
 echo "Start building app"
 ionic build --prod -- --base-href /www/
 
+cp -r www ../../public_html/
+
 echo "Changing current dir to $CUR_DIR"
 cd $CUR_DIR || exit
