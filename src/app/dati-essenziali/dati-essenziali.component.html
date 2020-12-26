@@ -14,6 +14,8 @@
           <ion-badge slot="end" [color]="getColorForField(data.percentuale_positivi_casi_giornaliera, 'percentuale_positivi_casi_giornaliera')"> {{ data.percentuale_positivi_casi_giornaliera | percent:'1.0-2' }} ({{ data.nuovi_positivi | number }} su {{ data.variazione_casi_testati | number}}) </ion-badge>
         </ion-item>
       </ion-col>
+    </ion-row>
+    <ion-row>
       <ion-col>
         <ion-item>
           <ion-label class="ion-text-wrap">Totale casi</ion-label>
