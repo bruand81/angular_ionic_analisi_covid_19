@@ -181,7 +181,7 @@ export class RegioniPage implements OnInit{
         }
       });
       // console.log(dataTable);
-      const colorFormatColumnsGreenToRedCol = [2, 3, 4, 5, 6, 8, 20, 21];
+      const colorFormatColumnsGreenToRedCol = [2, 3, 4, 5, 6, 20, 21];
       const colorFormatColumnsRedToGreenCol = [7];
       const colorFormats = [];
 
@@ -304,6 +304,32 @@ export class RegioniPage implements OnInit{
           options: {
             pattern: '<strong>{0}</strong> ({1} su {2})',
             dstColumnIndex: 3,
+          }
+        },
+        {
+          columns: [8],
+          type: 'ColorFormat',
+          options: {
+            ranges: [{
+              from: 0,
+              to: 60,
+              fromBgColor: '#ABEBC6',
+              toBgColor: '#f5deb1'
+            },
+              {
+                from: 60,
+                to: 150,
+                fromBgColor: '#f5deb1',
+                toBgColor: '#AED6F1'
+              }
+              ,
+              {
+                from: 150,
+                to: maxPerColumns[8] + 1,
+                fromBgColor: '#AED6F1',
+                toBgColor: '#F5B7B1'
+              }
+            ]
           }
         },
       ];

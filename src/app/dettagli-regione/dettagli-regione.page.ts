@@ -146,7 +146,7 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
       });
 
       const colorFormatColumnsGreenToRedCol = [3, 4, 5, 6, 9, 10];
-      const colorFormatColumnsRedToGreenCol = [7, 8];
+      const colorFormatColumnsRedToGreenCol = [7];
       const colorFormats = [];
 
       colorFormatColumnsGreenToRedCol.forEach(id => {
@@ -219,6 +219,32 @@ export class DettagliRegionePage implements OnInit, AfterViewInit {
         {
           columns: [7, 8],
           type: 'BarFormat'
+        },
+        {
+          columns: [8],
+          type: 'ColorFormat',
+          options: {
+            ranges: [{
+              from: 0,
+              to: 60,
+              fromBgColor: '#ABEBC6',
+              toBgColor: '#f5deb1'
+            },
+              {
+                from: 60,
+                to: 150,
+                fromBgColor: '#f5deb1',
+                toBgColor: '#AED6F1'
+              }
+              ,
+              {
+                from: 150,
+                to: maxPerColumns[8] + 1,
+                fromBgColor: '#AED6F1',
+                toBgColor: '#F5B7B1'
+              }
+            ]
+          }
         }
       ];
 
