@@ -24,6 +24,20 @@
       </ion-col>
       <ion-col>
         <ion-item>
+          <ion-label class="ion-text-wrap">Totale casi test molecolare PCR</ion-label>
+          <ion-badge slot="end" [color]="getColorForField(data.variazione_totale_positivi_test_molecolare, 'nuovi_positivi')"> {{ data.totale_positivi_test_molecolare | number }} su {{ data.tamponi_test_molecolare | number }} ({{ data.variazione_totale_positivi_test_molecolare | number }} su {{ data.variazione_tamponi_test_molecolare | number }}) </ion-badge>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label class="ion-text-wrap">Totale casi test antigenico rapido</ion-label>
+          <ion-badge slot="end" [color]="getColorForField(data.variazione_totale_positivi_test_antigenico_rapido, 'nuovi_positivi')"> {{ data.totale_positivi_test_antigenico_rapido | number }} su {{ data.tamponi_test_antigenico_rapido | number }} ({{ data.variazione_totale_positivi_test_antigenico_rapido | number }} su {{ data.variazione_tamponi_test_antigenico_rapido | number }}) </ion-badge>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
           <ion-label class="ion-text-wrap">Decessi</ion-label>
           <ion-badge slot="end" [color]="getColorForField(data.variazione_deceduti, 'variazione_deceduti')"> {{ data.deceduti | number }} ({{ data.variazione_deceduti | number }}) </ion-badge>
         </ion-item>
@@ -68,6 +82,20 @@
         <ion-item>
           <ion-label class="ion-text-wrap">Guariti</ion-label>
           <ion-badge slot="end" [color]="getColorForField(data.variazione_dimessi_guariti, 'variazione_dimessi_guariti')">{{ data.dimessi_guariti | number }} ({{ data.variazione_dimessi_guariti | number }}) </ion-badge>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="data.note_casi && (data.note_casi !== '0.0') && (data.note_casi !== 'None')">
+      <ion-col>
+        <ion-item>
+          <ion-label>Note casi</ion-label> {{data.note_casi}}
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="data.note_test && (data.note_test !== '0.0') && (data.note_test !== 'None')">
+      <ion-col>
+        <ion-item>
+          <ion-label>Note test</ion-label> {{data.note_test}}
         </ion-item>
       </ion-col>
     </ion-row>

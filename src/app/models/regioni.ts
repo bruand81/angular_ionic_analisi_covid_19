@@ -81,4 +81,31 @@ export interface Regioni {
     variazione_ingressi_terapia_intensiva: number;
     variazione_ingressi_terapia_intensiva_3dma: number;
     variazione_ingressi_terapia_intensiva_7dma: number;
+
+    // Update 18/01/2021
+    note_test: string;
+    note_casi: string;
+    totale_positivi_test_molecolare: number;
+    variazione_totale_positivi_test_molecolare: number;
+    variazione_totale_positivi_test_molecolare_3dma: number;
+    variazione_totale_positivi_test_molecolare_7dma: number;
+    percentuale_totale_positivi_test_molecolare: number;
+
+    totale_positivi_test_antigenico_rapido: number;
+    variazione_totale_positivi_test_antigenico_rapido: number;
+    variazione_totale_positivi_test_antigenico_rapido_3dma: number;
+    variazione_totale_positivi_test_antigenico_rapido_7dma: number;
+    percentuale_totale_positivi_test_antigenico_rapido: number;
+
+    tamponi_test_molecolare: number;
+    variazione_tamponi_test_molecolare: number;
+    variazione_tamponi_test_molecolare_3dma: number;
+    variazione_tamponi_test_molecolare_7dma: number;
+    percentuale_tamponi_test_molecolare: number;
+
+    tamponi_test_antigenico_rapido: number;
+    variazione_tamponi_test_antigenico_rapido: number;
+    variazione_tamponi_test_antigenico_rapido_3dma: number;
+    variazione_tamponi_test_antigenico_rapido_7dma: number;
+    percentuale_tamponi_test_antigenico_rapido: number;
 }

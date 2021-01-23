@@ -36,7 +36,7 @@ export class GraficiComponent implements OnInit, AfterViewInit{
   }
 
   chartSelectEvent(event) {
-    console.log(event);
+    // console.log(event);
   }
 
   resize(width: number) {
@@ -237,7 +237,7 @@ export class GraficiComponent implements OnInit, AfterViewInit{
           {type: 'number', role: 'annotation'}, ]);
         dt.forEach((value) => {
           const date = this.datepipe.transform(value.data, 'dd, MMM');
-          console.log(value.ingressi_terapia_intensiva);
+          // console.log(value.ingressi_terapia_intensiva);
           dataTable.push([date,
             value.variazione_terapia_intensiva,
             value.variazione_terapia_intensiva,

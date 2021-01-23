@@ -34,7 +34,7 @@ export class InfoPage implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log(this.pathNavigatorSupport.getNextPath(this.viewId));
+    // console.log(this.pathNavigatorSupport.getNextPath(this.viewId));
   }
 
 }

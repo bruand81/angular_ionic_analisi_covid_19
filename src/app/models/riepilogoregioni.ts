@@ -27,4 +27,14 @@ export interface Riepilogoregioni {
     ricoverati_con_sintomi_7d_incr: number;
     ingressi_terapia_intensiva: number;
     percentuale_variazione_ingressi_terapia_intensiva: number;
+    totale_positivi_test_molecolare: number;
+    variazione_totale_positivi_test_molecolare: number;
+    totale_positivi_test_antigenico_rapido: number;
+    variazione_totale_positivi_test_antigenico_rapido: number;
+    tamponi_test_molecolare: number;
+    variazione_tamponi_test_molecolare: number;
+    tamponi_test_antigenico_rapido: number;
+    variazione_tamponi_test_antigenico_rapido: number;
+    note_test: string;
+    note_casi: string;
 }
