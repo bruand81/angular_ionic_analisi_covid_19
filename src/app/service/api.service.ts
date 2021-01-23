@@ -4,8 +4,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-// const endpoint = 'https://antarescloud.antaresnet.org:8443/api/';
-const endpoint = 'http://127.0.0.1:8000/api/';
+const endpoint = 'https://antarescloud.antaresnet.org:8443/api/';
+// const endpoint = 'http://127.0.0.1:8000/api/';
 
 @Injectable({
   providedIn: 'root'
