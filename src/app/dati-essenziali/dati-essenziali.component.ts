@@ -115,7 +115,7 @@ export class DatiEssenzialiComponent implements OnInit {
         sign = 1;
         break;
       case 'incidenza_7d':
-        min = 20;
+        min = 50;
         max = 100;
         sign = 1;
         break;
